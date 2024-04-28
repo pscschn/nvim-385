@@ -9,6 +9,8 @@ vim.g.maplocalleader = ' '
 
 keymap('n', 'U', '<C-r>', opts)
 
+vim.keymap.set('n', '<leader>ex', vim.cmd.Ex)
+
 -- better window navigation
 keymap("n", "<C-h>", "<C-w>h", opts) -- left window
 keymap("n", "<C-k>", "<C-w>k", opts) -- up window
