@@ -90,6 +90,7 @@ local mappings = {
     ['p'] = { '<cmd>Lazy<CR>', 'Plugin Manager'}, 
     ['q'] = { '<cmd>wqall!<CR>', 'Quit' }, 
     ['w'] = { '<cmd>w!<CR>', 'Save' },
+    
 }
 which_key.setup(setup)
 which_key.register(mappings, opts)

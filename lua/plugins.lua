@@ -25,6 +25,10 @@ return {
             -- to show diff splits and open commits in browser
             "tpope/vim-fugitive",
             -- to open commits in browser with fugitive
-            "tpope/vim-rhubarb",}
+            "tpope/vim-rhubarb",
         }
+    },
+    {
+        'catppuccin/nvim', name = 'catppuccin', priority = 1000
     }
+}
