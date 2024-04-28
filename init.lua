@@ -1,5 +1,6 @@
 require 'lazy-config'
 require 'options' 
+require 'keymaps'
 
 vim.opt.number = true
 vim.g.mapleader = " " 
