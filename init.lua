@@ -1,16 +1,6 @@
 require 'lazy-config'
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
-end
+require 'options' 
 
-vim.opt.rtp:prepend(lazypath)
 vim.opt.number = true
 vim.g.mapleader = " " 
 vim.g.maplocalleader = "\\"
