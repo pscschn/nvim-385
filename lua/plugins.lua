@@ -12,6 +12,10 @@ return {
         }
     },
     {
+        'nvim-lualine/lualine.nvim',
+        dependencies = { 'nvim-tree/nvim-web-devicons' }
+    },
+    {
         'tpope/vim-fugitive'
     },
     {
@@ -38,5 +42,5 @@ return {
         'akinsho/bufferline.nvim', 
         version = '*',
         dependencies = 'nvim-tree/nvim-web-devicons'
-    }
+    }, 
 }

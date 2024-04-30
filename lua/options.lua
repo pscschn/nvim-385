@@ -33,5 +33,5 @@ opt.undofile = true
 opt.undolevels = 1000
 opt.updatetime = 200
 opt.wildmode = 'longest:full,full' -- command line completionmode
-
+opt.termguicolors = true
 vim.g.markdown_recommended_style = 0
