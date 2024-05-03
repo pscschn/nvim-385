@@ -12,8 +12,7 @@ return {
         }
     },
     {
-        'nvim-lualine/lualine.nvim',
-        dependencies = { 'nvim-tree/nvim-web-devicons' }
+        'tamton-aquib/staline.nvim'
     },
     {
         'tpope/vim-fugitive'
@@ -39,12 +38,12 @@ return {
         'nvim-tree/nvim-web-devicons'
     },
     {
-        'akinsho/bufferline.nvim', 
-        version = '*',
-        dependencies = 'nvim-tree/nvim-web-devicons'
-    }, 
-    {
         "nvim-treesitter/nvim-treesitter",
+    },
+    {
+        'akinsho/toggleterm.nvim',
+        tag = "*",
+        config = true
     },
     {
         'norcalli/nvim-colorizer.lua'

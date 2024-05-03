@@ -12,7 +12,9 @@ opt.grepprg = 'rg --vimgrep' -- program used for :grep operation
 opt.ignorecase = true -- ignore case in a pattern
 opt.inccommand = 'split' -- show preview of how Ex command will affect text 
 opt.incsearch = true -- highlight where search pattern matches as you type
-opt.laststatus = 0 -- specifies if last window will have a status line
+-- required by staline
+opt.laststatus = 2 -- specifies if last window will have a status line
+opt.showtabline = 2
 opt.list = true -- show invisible characters (tabs... )
 opt.number = true -- show absolute line numbers of a file
 opt.pumblend = 10 -- level of transparency for popup windows
