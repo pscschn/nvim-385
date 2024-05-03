@@ -3,11 +3,22 @@
 echo 'Installing ripgrep...'
 sudo -S dnf -y install ripgrep
 
-echo 'Backing up existing nvim config...' 
-mv ~/.config/nvim  ~/.config/nvim.bck
+echo 'Checking for neovim dir..' 
+if [ -d ~/.config/nvim ]; then 
+    echo 'Backing up existing nvim config...' 
+    mv ~/.config/nvim  ~/.config/nvim.bck
+else
+    mkdir -p ~/.config/nvim 
+fi
 
-echo 'Backing up existing tmux config...' 
-mv ~/.config/tmux ~/.config/tmux.bck
+
+echo 'Checking for tmux dir..' 
+if [ -d ~/.config/tmux ]; then 
+    echo 'Backing up existing tmux config...' 
+    mv ~/.config/tmux ~/.config/tmux.bck
+else 
+    mkdir -p ~/.config/tmux
+fi
 
 echo 'Copying nvim config...'
 cp -fr ./nvim ~/.config/nvim
