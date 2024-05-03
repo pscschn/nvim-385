@@ -34,7 +34,7 @@ require("catppuccin").setup({
         cmp = false,
         gitsigns = false,
         nvimtree = false,
-        treesitter = false,
+        treesitter = true,
         notify = false,
         mini = {
             enabled = false,
@@ -62,6 +62,10 @@ require("catppuccin").setup({
                 TelescopeResultsDiffChange = { fg = cp.yellow },
                 TelescopeResultsDiffDelete = { fg = cp.red },
 
+                -- For treesitter
+                ["@keyword.return"] = { fg = cp.pink, style = clear },
+                ["@error.c"] = { fg = cp.none, style = clear },
+                ["@error.cpp"] = { fg = cp.none, style = clear },
             }
         end
         }

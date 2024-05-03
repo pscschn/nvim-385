@@ -22,23 +22,45 @@ vim.keymap.set("n", "<leader>fi", "<cmd>AdvancedGitSearch<CR>", { desc = "Advanc
 vim.keymap.set("n", "<leader>gc", builtin.git_commits, { desc = "Search Git Commits" })
 vim.keymap.set("n", "<leader>gb", builtin.git_bcommits, { desc = "Search Git Commits for Buffer" })
 vim.keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "Find Keymaps" })		
-vim.keymap.set("n", "<leader>mp", builtin.man_pages, { desc = "List man page entries" })	
-vim.keymap.set("n", "<leader>/", function()
-    -- You can pass additional configuration to telescope to change theme, layout, etc.
-    require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
-        winblend = 10,
-        previewer = false,
-        layout_config = { width = 0.7 },
-    }))
-end, { desc = "[/] Fuzzily search in current buffer" })
-
+vim.keymap.set("n", "<leader>mp", builtin.man_pages, { desc = "List man page entries" })
 
 local actions = require('telescope.actions')
 require('telescope').setup({
     defaults = {
-        --prompt_prefix = " ",
-        --selection_caret = " ",
+        initial_mode = "insert",
+        prompt_prefix = " ",
+        selection_caret = " ",
         path_display = { "smart" },
+        results_title = false,
+        layout_strategy = "vertical",
+        selection_strategy = "reset",
+        sorting_strategy = "ascending",
+        color_devicons = true,
+        file_ignore_patterns = { ".git/", ".cache", "build/", "%.class", "%.pdf", "%.mkv", "%.mp4", "%.zip", "node_modules/" },
+        layout_config = {
+            horizontal = {
+                prompt_position = "top",
+                preview_width = 0.55,
+                results_width = 0.8,
+            },
+            vertical = {
+                mirror = false,
+            },
+            width = 0.87,
+            height = 0.80,
+            preview_cutoff = 120,
+        },
+        file_previewer = require("telescope.previewers").vim_buffer_cat.new,
+        grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
+        qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
+        file_sorter = require("telescope.sorters").get_fuzzy_file,
+        generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
+        buffer_previewer_maker = require("telescope.previewers").buffer_previewer_make,
+        border = {}, 
+        borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+        use_less =true,
+        set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil
+        winblend = 0,
         mappings = {
             i = {
                 ["<C-n>"] = actions.cycle_history_next,
@@ -114,6 +136,7 @@ require('telescope').setup({
         -- Now the picker_config_key will be applied every time you call this
         -- builtin picker
     },
+    extension_list = { "themes", "terms"},
     extensions = {
         -- Your extension configuration goes here:
         -- extension_name = {

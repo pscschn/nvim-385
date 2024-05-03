@@ -1,10 +1,10 @@
 require('staline').setup {
     defaults = {
         expand_null_ls = false,  -- This expands out all the null-ls sources to be shown
-        left_separator  = "",
-        right_separator = "",
+        left_separator  = "",
+        right_separator = "",
         full_path       = false,
-        line_column     = "[%l/%L] :%c  %p%% ", -- `:h stl` to see all flags.
+        line_column     = "[%l/%L] :%c  %p%% ", -- `:h stl` to see all flags.
 
         fg              = "#000000",  -- Foreground text color.
         bg              = "none",     -- Default background is transparent.
