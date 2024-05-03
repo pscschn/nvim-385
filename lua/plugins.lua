@@ -46,4 +46,7 @@ return {
     {
         "nvim-treesitter/nvim-treesitter",
     },
+    {
+        'norcalli/nvim-colorizer.lua'
+    }
 }
