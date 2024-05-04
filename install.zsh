@@ -21,6 +21,7 @@ else
 fi
 
 echo 'Copying nvim config...'
+rm -rf ~/.config/nvim
 cp -fr ./nvim ~/.config/nvim
 
 echo 'Copying tmux config...'
