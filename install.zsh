@@ -1,7 +1,7 @@
 #! /bin/zsh 
 
-echo 'Installing ripgrep...'
-sudo -S dnf -y install ripgrep
+# echo 'Installing ripgrep...'
+#sudo -S dnf -y install ripgrep
 
 echo 'Checking for neovim dir..' 
 if [ -d ~/.config/nvim ]; then 
