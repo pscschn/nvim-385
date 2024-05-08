@@ -1,7 +1,7 @@
 require 'options' 
 require 'keymaps'
 require 'lazy-config'
---require "autopairs-config" 
+require "autopairs-config" 
 require 'staline-config'
 require 'stabline-config'
 require 'treesitter-config'
