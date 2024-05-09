@@ -11,7 +11,7 @@ require'nvim-treesitter.configs'.setup {
   -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
   auto_install = true,
 
-  -- List of parsers to ignore installing (or "all")
+  -- List of parsers to ignore installina (or "all")
   ignore_install = {  },
 
   ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
@@ -39,5 +39,17 @@ require'nvim-treesitter.configs'.setup {
     -- Using this option may slow down your editor, and you may see some duplicate highlights.
     -- Instead of true it can also be a list of languages
     additional_vim_regex_highlighting = false,
-  },
+    },
+    indent = { enable = true, disable = { "yaml" } },
+    rainbow = {
+        enable = true,
+        -- list of languages you want to disable the plugin for
+        -- disable = { "jsx", "cpp" },
+        -- Which query to use for finding delimiters
+        query = 'rainbow-parens',
+        -- Highlight the entire buffer all at once
+        strategy = require 'ts-rainbow.strategy.global',
+        -- Do not enable for files with more than n lines
+        max_file_lines = 3000
+    }
 }

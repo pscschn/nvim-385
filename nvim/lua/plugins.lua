@@ -98,4 +98,10 @@ return {
     {
         "windwp/nvim-autopairs"
     },
+    -- indentation highlighting 
+    { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
+    -- Rainbow Highlighting
+    {
+        "HiPhish/nvim-ts-rainbow2",
+    },
 }

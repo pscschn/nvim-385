@@ -5,6 +5,7 @@ require "autopairs-config"
 require 'staline-config'
 require 'stabline-config'
 require 'treesitter-config'
+require 'indentline-config'
 require 'colorizer-config'
 require 'flash-config'
 require 'catppuccin-config'
