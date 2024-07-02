@@ -1,7 +1,7 @@
 #! /bin/zsh 
 
-# echo 'Installing ripgrep...'
-#sudo -S dnf -y install ripgrep
+# install tpm
+source ./scripts/install-tpm.zsh
 
 # backup nvim
 source ./scripts/backup-nvim.zsh
@@ -14,6 +14,3 @@ source ./scripts/configure-nvim.zsh
 
 # configure tmux
 source ./scripts/configure-tmux.zsh
-
-# install tpm
-source ./scripts/install-tpm.zsh
