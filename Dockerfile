@@ -33,9 +33,7 @@ RUN set -eu && \
 RUN echo "Installing nvim-385 preset" && \
     cd /tmp/nvim-385/ && \
     zsh ./install.zsh;
- 
-WORKDIR ~/.config/nvim
 
 #CMD ["zsh", "/tmp/nvim-385/configure-tmux.zsh"]
-ENTRYPOINT ["tail", "-f", "/dev/null"]
-#CMD ["nvim", "."]
+#ENTRYPOINT ["tail", "-f", "/dev/null"]
+CMD ["nvim", "~"]
