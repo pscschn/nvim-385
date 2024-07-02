@@ -1,5 +1,7 @@
 FROM docker.io/fedora
 
+USER 1000
+
 ARG NVIM_VER=v0.9.5
 ARG TMUX_PREFIX="C-b"
 
@@ -13,6 +15,11 @@ RUN dnf -y update && \
 
 WORKDIR /tmp
 
+RUN set -e && \
+    echo "Cloning nvim-385 repository..." && \
+    git clone https://github.com/pscschn/nvim-385 && \
+    chmod +x ./nvim-385/install.zsh;
+
 RUN set -eu && \
     echo "Installing nvim..." && \
     wget -q https://github.com/neovim/neovim/releases/download/${NVIM_VER}/nvim-linux64.tar.gz && \
@@ -22,11 +29,6 @@ RUN set -eu && \
     rm -rf nvim-*;
 #RUN chmod +x /usr/share/src/nvim-linux64/bin/nvim
 
-
-RUN set -e && \
-    echo "Cloning nvim-385 repository..." && \
-    git clone https://github.com/pscschn/nvim-385 && \
-    chmod +x ./nvim-385/install.zsh;
 
 RUN echo "Installing nvim-385 preset" && \
     cd /tmp/nvim-385/ && \
