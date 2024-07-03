@@ -1,16 +1,18 @@
 #! /bin/zsh 
 
+S=$(dirname "${BASH_SOURCE[0]}")
+
 # install tpm
-source ./scripts/install-tpm.zsh
+source ./$S/scripts/install-tpm.zsh
 
 # backup nvim
-source ./scripts/backup-nvim.zsh
+source ./$S/scripts/backup-nvim.zsh
 
 # backup tmux
-source ./scripts/backup-tmux.zsh
+source ./$S/scripts/backup-tmux.zsh
 
 # configure nvim
-source ./scripts/configure-nvim.zsh
+source ./$S/scripts/configure-nvim.zsh
 
 # configure tmux
-source ./scripts/configure-tmux.zsh
+source ./$S/scripts/configure-tmux.zsh
