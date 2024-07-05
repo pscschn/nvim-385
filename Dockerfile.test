@@ -9,7 +9,8 @@ RUN dnf --setopt=sslverify=0 -y install git \
     wget \
     tmux \
     ripgrep \
-    gcc;
+    gcc \
+    lua;
 
 WORKDIR /tmp
 
@@ -41,5 +42,7 @@ RUN set -e && \
 #CMD ["zsh", "/tmp/nvim-385/configure-tmux.zsh"]
 COPY ./docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
+
+WORKDIR /root/.config/nvim
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
