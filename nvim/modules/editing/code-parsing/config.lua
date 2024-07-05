@@ -1,7 +1,14 @@
 local Config = {}
 
 function Config.setup()
-    require'nvim-treesitter.configs'.setup {
+    local status_ok, treesitter_configs = pcall(require, 'nvim-treesitter.configs')
+
+    if not status_ok then
+        print('Error: failed to load nvim-treesitter configs')
+        return
+    end
+
+    treesitter_configs.setup {
         -- A list of parser names, or "all" (the five listed parsers should always be installed)
         ensure_installed = { "c", "lua", "vim", "vimdoc", "bash",
            "c_sharp", "cmake", "cpp", "graphql", "html", "http", "json", 

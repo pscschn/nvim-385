@@ -1,31 +1,29 @@
+local module_dir = vim.fn.expand('%:p:h')
+vim.cmd('cd ' .. module_dir)
+
+
 local function loadPlugins(parentDir)
     local modules = {}
-
+    print(module_dir)
     -- Iterate through subdirectories
-
-    for _, subdirectory in ipairs(vim.fn.readdir(parentDir)) do
-        local modulePath = parentDir .. '/' .. subdirectory .. 'init'
-
+    for dir in io.popen('ls -d ' .. module_dir .. ' */ | grep /$ | sed \'s/\\/$//\''):lines() do 
+        
+        local module_init = dir .. '.init'
+        
         -- Attempt to require the module 
-
-        local success, module = pcall(require, modulePath)
+        local success, module = pcall(require, module_init)
         if success then
             table.insert(modules, module)
         else 
-            print('Error loading module: ', modulePath)
+            print('Error loading module: ', module_init)
         end
     end
 
     return modules
 
 end
-
--- Determine the parent directory dynamically based on script location
-local scriptPath = vim.fn.expand('<sfile>')
-local parentDir = vim.fn.fnamemodify(scriptPath, ':h')  -- Get the directory part of the script path
-
 -- Load modules from subdirectories relative to the determined parent directory
-local loadedModules = loadPlugins(parentDir)
+local loadedModules = loadPlugins(module_dir)
 
 -- Print loaded modules for verification
 for i, module in ipairs(loadedModules) do
