@@ -1,4 +1,6 @@
-local module_dir = vim.fn.expand('%:p:h')
+local utils = require("utils")
+
+local module_dir = utils.pwd()
 
 vim.cmd('cd ' .. module_dir)
 
@@ -16,7 +18,7 @@ if install_success and config_success then
     module_content.config = plugin_config
 
     return {
-        module = module_content,
+        data = module_content,
         index = index
     }
 else
