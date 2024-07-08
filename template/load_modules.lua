@@ -23,3 +23,14 @@ local function loadPlugins(parentDir)
     return modules
 
 end
+
+local loadedModules = loadPlugins(module_dir)
+
+local loadedPlugins = {}
+
+for module in loadedModules do
+    for i = 1, #module do
+        table.insert(loadedPlugins, module[i])
+    end
+end
+
