@@ -1,36 +1,23 @@
-local utils = require('utils')
-local module_dir = utils.pwd()
-vim.cmd('cd ' .. module_dir)
-
-local function loadPlugins(parentDir)
-    local modules = {}
-    print(module_dir)
-    -- Iterate through subdirectories
-    for dir in io.popen('ls -d ' .. module_dir .. ' */ | grep /$ | sed \'s/\\/$//\''):lines() do 
-        
-        local module_init = dir  .. '/init'
-        
-        require(module_init)
-        -- Attempt to require the module 
-        local success, module = pcall(require, module_init)
-        if success then
-            table.insert(modules, module)
-        else 
-            print('Error loading module: ', module_init)
-        end
-    end
-
-    return modules
-
-end
-
-local loadedModules = loadPlugins(module_dir)
+local module = require('module')
+local subModules = module.loadsubmodules(module.pwd())
 
 local loadedPlugins = {}
 
-for module in loadedModules do
-    for i = 1, #module do
-        table.insert(loadedPlugins, module[i])
-    end
+for i, subModule in ipairs(subModules) do
+  print("SubModule " .. i)
+  for j, plugin in ipairs(subModule) do
+    print("  Plugin " .. j .. ": " .. tostring(plugin))
+      table.insert(loadedPlugins, plugin)
+  end
 end
 
+for i, plugin in ipairs(loadedPlugins) do
+  local index = plugin.index
+  local data = plugin.data
+  local config = data.config
+  local install = data.install
+  print("Module", i, ":", plugin ,'with index ' .. index .. '/r')
+  print('install: ', install, '/r')
+  config.setup()
+  print('/r')
+end
