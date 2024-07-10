@@ -12,7 +12,7 @@ end
 
 function M.lsmods(module_dir)
   local modules = {}
-  for dir in io.popen('ls -p ' .. module_dir .. ' */ | grep /$ | sed \'s/\\/$//\''):lines() do
+  for dir in io.popen('ls -p ' .. module_dir .. ' | grep /$ | sed \'s/\\/$//\''):lines() do
     local init_dir = module_dir .. '/' .. dir  .. '/init'
     local init_file = io.open(init_dir, "r")
     if init_file then
@@ -25,7 +25,8 @@ end
 
 function M.loadsubmodules(module_dir)
   local modules = {}
-  for dir in io.popen('ls -p ' .. module_dir .. ' */ | grep /$ | sed \'s/\\/$//\''):lines() do
+  
+  for dir in io.popen('ls -p ' .. module_dir .. ' | grep /$ | sed \'s/\\/$//\''):lines() do
       local module_init = module_dir .. '/' .. dir  .. '/init'
       local success, module = pcall(dofile, module_init .. '.lua')
       if success then

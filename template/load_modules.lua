@@ -6,6 +6,7 @@ local loadedPlugins = {}
 for i, subModule in ipairs(subModules) do
   print("SubModule " .. i)
   for j, plugin in ipairs(subModule) do
+    
     print("  Plugin " .. j .. ": " .. tostring(plugin))
       table.insert(loadedPlugins, plugin)
   end
