@@ -1,4 +1,8 @@
 local utils = require("utils")
+local plugin = require('plugin')
+
+local myplugin = plugin.new()
+
 
 local module_dir = utils.pwd()
 

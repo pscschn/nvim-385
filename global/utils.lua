@@ -10,4 +10,18 @@ function M.pwd()
     return dir_path
 end
 
+function M.shallowCopy(original)
+    local copy = {}
+    for k, v in pairs(original) do
+        copy[k] = v
+    end
+    return copy
+end
+
+function M.getCaller()
+    -- Get info about the caller (level 2 in the stack)
+    local info = debug.getinfo(2, "S")
+    return info.short_src
+end
+
 return M
