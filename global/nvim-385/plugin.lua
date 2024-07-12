@@ -1,4 +1,4 @@
-local utils = require('utils')
+local utils = require('nvim-385.utils')
 
 local Plugin = {}
 Plugin.__index = Plugin

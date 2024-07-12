@@ -1,6 +1,6 @@
-local utils = require('utils')
+local utils = require('nvim-385.utils')
 local plugins = require('load_modules')
-local module = require('module')
+local module = require('nvim-385.module')
 
 local generate_content = function(file)
   local contents = "return { \n"

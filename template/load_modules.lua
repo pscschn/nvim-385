@@ -1,4 +1,4 @@
-local module = require('module')
+local module = require('nvim-385.module')
 local subModules = module.loadsubmodules(module.pwd())
 
 local loadedPlugins = {}
