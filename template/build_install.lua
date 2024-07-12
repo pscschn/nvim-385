@@ -12,6 +12,5 @@ contents = contents .. "}"
 print(contents)
 
 local path = utils.getAbsolutePath(module.pwd(), "../.build")
-print(path)
 utils.mkdir_p(path)
 utils.writeToFile(path, 'plugins.lua', contents)
