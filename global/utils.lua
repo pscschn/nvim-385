@@ -53,4 +53,29 @@ function M.findFile(directory, pattern)
     return indexfile
 end
 
+
+function M.writeToFile(directory, filename, contents)
+    -- Ensure the directory ends with a slash
+    if not directory:match("/$") then
+      directory = directory .. "/"
+    end
+
+    -- Construct the full file path
+    local filePath = directory .. filename
+
+    -- Open the file in write mode
+    local file, err = io.open(filePath, "w")
+    if not file then
+      return false, "Failed to open file: " .. err
+    end
+
+    -- Write the contents to the file
+    file:write(contents)
+
+    -- Close the file
+    file:close()
+
+    return true
+  end
+
 return M

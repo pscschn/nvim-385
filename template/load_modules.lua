@@ -9,6 +9,8 @@ for _, subModule in ipairs(subModules) do
   end
 end
 
-return table.sort(loadedPlugins, function(a, b)
+table.sort(loadedPlugins, function(a, b)
   return a.index < b.index
 end)
+
+return loadedPlugins
