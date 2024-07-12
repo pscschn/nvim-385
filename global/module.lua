@@ -25,7 +25,7 @@ end
 
 function M.loadsubmodules(module_dir)
   local modules = {}
-  
+
   for dir in io.popen('ls -p ' .. module_dir .. ' | grep /$ | sed \'s/\\/$//\''):lines() do
       local module_init = module_dir .. '/' .. dir  .. '/init'
       local success, module = pcall(dofile, module_init .. '.lua')

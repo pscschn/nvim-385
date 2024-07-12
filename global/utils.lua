@@ -24,4 +24,33 @@ function M.getCaller()
     return info.short_src
 end
 
+function M.findFile(directory, pattern)
+    local popen = io.popen
+    local pfile = popen('ls "'..directory..'"')
+    
+    if pfile == nil then
+        print('Error: No files inside to find directory: ' .. directory)
+        return nil
+    end
+
+    local indexfile = nil
+    local i = 0
+
+    for filename in pfile:lines() do
+        if string.match(filename, pattern) then
+            i = i + 1
+            indexfile = filename
+        end
+    end
+
+    pfile:close()
+
+    if not i == 1 then
+        print('Error: multiple files matching defined pattern inside directory: ' .. directory )
+        return nil
+    end
+
+    return indexfile
+end
+
 return M
