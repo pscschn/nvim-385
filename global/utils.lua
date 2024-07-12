@@ -54,10 +54,38 @@ function M.findFile(directory, pattern)
 end
 
 
+
+function M.mkdir_p(path)
+    local stat = vim.loop.fs_stat(path)
+    if stat and stat.type == 'directory' then
+      return true -- Directory already exists
+    end
+  
+    local parent = vim.fn.fnamemodify(path, ":h")
+    if parent == path then
+      return false -- Reached the root and the directory does not exist
+    end
+  
+    -- Recursively create parent directory
+    M.mkdir_p(parent)
+  
+    -- Create the directory
+    local success = vim.loop.fs_mkdir(path, 493) -- 493 is octal for 0755
+    if not success then
+      return false, "Failed to create directory: " .. path
+    end
+  
+    return true
+  end
+
 function M.writeToFile(directory, filename, contents)
     -- Ensure the directory ends with a slash
     if not directory:match("/$") then
       directory = directory .. "/"
+    end
+    
+    if not M.directory_exists(directory) then
+        print('Error: directory does not exist ' .. directory)
     end
 
     -- Construct the full file path
@@ -77,5 +105,45 @@ function M.writeToFile(directory, filename, contents)
 
     return true
   end
+
+M.getAbsolutePath = function(base, relative)
+    -- Normalize the paths by removing any trailing slashes
+    base = base:gsub("/$", "")
+    relative = relative:gsub("^/", "")
+  
+    -- Split the paths into components
+    local baseComponents = {}
+    for component in base:gmatch("[^/]+") do
+      table.insert(baseComponents, component)
+    end
+  
+    local relativeComponents = {}
+    for component in relative:gmatch("[^/]+") do
+      table.insert(relativeComponents, component)
+    end
+  
+    -- Process the relative path components
+    for _, component in ipairs(relativeComponents) do
+      if component == ".." then
+        -- Go up one level in the directory
+        if #baseComponents > 0 then
+          table.remove(baseComponents)
+        end
+      elseif component ~= "." then
+        -- Add the component to the base path
+        table.insert(baseComponents, component)
+      end
+    end
+  
+    -- Join the components to form the absolute path
+    return "/" .. table.concat(baseComponents, "/")
+  end
+
+
+
+function M.directory_exists(path)
+  local stat = vim.loop.fs_stat(path)
+  return stat and stat.type == 'directory'
+end
 
 return M

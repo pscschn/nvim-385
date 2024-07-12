@@ -1,5 +1,6 @@
 local utils = require('utils')
 local plugins = require('load_modules')
+local module = require('module')
 local contents = "return { \n"
 
 for _, value in pairs(plugins) do
@@ -10,4 +11,7 @@ contents = contents .. "}"
 
 print(contents)
 
---utils.writeToFile()
+local path = utils.getAbsolutePath(module.pwd(), "../.build")
+print(path)
+utils.mkdir_p(path)
+utils.writeToFile(path, 'plugins.lua', contents)
