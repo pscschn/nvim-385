@@ -1,14 +1,11 @@
 require 'options' 
 require 'keymaps'
 require 'lazy-config'
-require "autopairs-config" 
-require 'staline-config'
-require 'stabline-config'
-require 'treesitter-config'
-require 'indentline-config'
-require 'colorizer-config'
-require 'flash-config'
-require 'catppuccin-config'
-require 'lsp-config'
-require 'telescope-config'
-require 'whichkey'
+
+for _, module in ipairs(require('configs')) do
+    if type(module.setup) == "function" then
+        module.setup()
+    else
+        print("No setup function found in module")
+    end
+end
