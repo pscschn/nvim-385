@@ -1,3 +1,10 @@
+## Prerequisites
+
+1. Install just
+```zsh
+dnf install just
+```
+
 Quick fix to enable global usage of shared scripts
 
 ```bash

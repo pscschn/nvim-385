@@ -32,6 +32,12 @@ COPY ./install.zsh ./install.zsh
 
 WORKDIR /tmp
 
+# install just
+RUN mkdir -p ~/bin && \
+    wget -qO- https://just.systems/install.sh | bash -s -- --to ~/bin && \
+    export PATH="$PATH:$HOME/bin"
+
+
 RUN set -e && \
     echo "CloningInstalling nvim-385 preset..." && \
     chmod +x ./nvim-385/install.zsh && \
