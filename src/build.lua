@@ -1,6 +1,6 @@
 local utils = require('nvim-385.utils')
-local plugins = dofile('./modules.load')
 local module = require('nvim-385.module')
+local plugins = dofile(module.pwd() .. '/modules/load.lua')
 
 local generate_content = function(file)
   local contents = "return { \n"

@@ -1,6 +1,5 @@
-recipe-name:
-  echo 'This is a recipe!'
+build:
+  source scripts/build.zsh
 
-# this is a comment
-another-recipe:
-  @echo 'This is another recipe.'
+link-globals:
+  source scripts/link-globals.zsh
