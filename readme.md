@@ -48,7 +48,9 @@ So, I've decided to create my own project, which will solve these problems for m
 
 ### Solution Strategy
 
-My idea is to build the nvim configuration like a coding project. Nvim plugins will be grouped as standardized lua modules based on their function and effect on nvim. The source directory will be easy to read, similar to opening the settings in a gui based code editor. Instead of seeing a random plugin name in some file with a dosand additional lines, you'll intuitively discover settings, like "code completion" under a parent module "Intellisense" (for example) without having to wade through any files or documentation. Modules will be loaded anonymously and automatically so adding, replacing or removing certain plugins will be a cake.
+My idea is to build the nvim configuration like a coding project. Nvim plugins will be grouped as standardized lua modules based on their function and effect on nvim. The source directory will be easy to read, similar to opening the settings in a gui based code editor. Instead of seeing a random plugin name in some file with a dosand additional lines, you'll intuitively discover settings, like "code completion" under a parent module "Intellisense" (for example) just by looking at the directory structure without having to wade through any files or documentation. Modules will be loaded anonymously and automatically so adding, replacing or removing certain plugins will be a cake.
+
+
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
