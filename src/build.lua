@@ -18,3 +18,14 @@ utils.mkdir_p(path)
 utils.writeToFile(path, 'plugins.lua', generate_content( 'install.lua'))
 utils.writeToFile(path, 'configs.lua', generate_content( 'config.lua'))
 utils.writeToFile(path, 'keymaps.lua', generate_content( 'keymaps.lua'))
+
+local core_path = utils.getAbsolutePath(module.pwd(), "core")
+
+local init_content = 'vim.loader.enable()\n'
+init_content = init_content .. 'dofile("' .. core_path .. '/keymap.lua")\n'
+init_content = init_content .. 'dofile("' .. core_path .. '/options.lua")\n'
+init_content = init_content .. 'require("plugins")\n'
+init_content = init_content .. 'require("configs")\n'
+init_content = init_content .. 'require("keymaps")\n'
+
+utils.writeToFile(path, 'init.lua', init_content)

@@ -3,3 +3,6 @@ build:
 
 link-globals:
   source scripts/link-globals.zsh
+
+lua script:
+  nvim -l $(realpath {{script}})
