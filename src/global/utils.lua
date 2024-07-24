@@ -53,7 +53,27 @@ function M.findFile(directory, pattern)
     return indexfile
 end
 
+function M.copyFile(src, dest)
+  -- Open the source file in read-binary mode
+  local inputFile = io.open(src, "rb")
+  if not inputFile then
+      return false, "Source file not found."
+  end
 
+  -- Read the entire content of the file
+  local content = inputFile:read("*all")
+  inputFile:close() -- Close the source file
+
+  local outputFile = io.open(dest, "wb") -- Open the destination file in write-binary mode
+  if not outputFile then
+      return false, "Failed to open destination file."
+  end
+
+  outputFile:write(content) -- Write the content to the destination file
+  outputFile:close() -- Close the destination file
+
+  return true -- Return true indicating success
+end
 
 function M.mkdir_p(path)
     local stat = vim.loop.fs_stat(path)
@@ -145,5 +165,22 @@ function M.directory_exists(path)
   local stat = vim.loop.fs_stat(path)
   return stat and stat.type == 'directory'
 end
+
+
+function M.getAllFilesInDirectory(dir)
+  local handle = io.popen("ls " .. dir) -- Execute the ls command
+  if not handle then
+      return nil, "Failed to open directory."
+  end
+
+  local result = {}
+  for file in handle:lines() do
+      table.insert(result, file) -- Collect each file name
+  end
+
+  handle:close() -- Close the handle
+  return result
+end
+
 
 return M
