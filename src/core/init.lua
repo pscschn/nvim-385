@@ -8,7 +8,6 @@ require("plugin-manager")
 local config, config_loading_success = require("configs")
 if not config_loading_success then
     print("Error: Failed to load configs")
-    return
 end
 
 for _, module in ipairs(config) do

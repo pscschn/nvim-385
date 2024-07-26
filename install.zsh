@@ -1,4 +1,4 @@
-#! /bin/zsh 
+#! /bin/zsh
 
 S=$(dirname "${BASH_SOURCE[0]}")
 
