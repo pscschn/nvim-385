@@ -22,17 +22,14 @@ local generate_content = function(file)
 end
 
 local build_path = utils.getAbsolutePath(module.pwd(), "../.build")
-utils.mkdir_p(build_path)
-utils.writeToFile(build_path, 'plugins.lua', generate_content( 'install.lua'))
-utils.writeToFile(build_path, 'configs.lua', generate_content( 'config.lua'))
-utils.writeToFile(build_path, 'keymaps.lua', generate_content( 'keymaps.lua'))
+local lua_path = build_path .. '/lua'
+utils.mkdir_p(lua_path)
+utils.writeToFile(lua_path, 'plugins.lua', generate_content( 'install.lua'))
+utils.writeToFile(lua_path, 'configs.lua', generate_content( 'config.lua'))
+utils.writeToFile(lua_path, 'keymaps.lua', generate_content( 'keymaps.lua'))
 
-local files, err = utils.getAllFilesInDirectory(core_path)
-if files then
-    for _, file in ipairs(files) do
-      print(file)
-      utils.copyFile(core_path .. '/'..file, build_path .. '/'..file)
-    end
-else
-    print("Error:", err)
-end
+utils.copyFile(core_path .. '/' .. 'plugin-manager.lua', lua_path .. '/' .. 'plugin-manager.lua')
+utils.copyFile(core_path .. '/' .. 'global-keymap.lua', lua_path .. '/' .. 'global-keymap.lua')
+utils.copyFile(core_path .. '/' .. 'options.lua', lua_path .. '/' .. 'options.lua')
+
+utils.copyFile(core_path .. '/' .. 'init.lua', build_path .. '/' .. 'init.lua')

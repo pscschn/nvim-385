@@ -1,8 +1,11 @@
 build:
   source scripts/build.zsh
 
-link-globals:
+publish:
+  source scripts/publish.zsh
+
+install:
   source scripts/link-globals.zsh
 
-lua script:
+test script:
   nvim -l $(realpath {{script}})
