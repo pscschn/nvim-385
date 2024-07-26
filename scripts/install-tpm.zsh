@@ -1,12 +1,12 @@
-#! /bin/zsh 
+#! /bin/zsh
 
 # Installs tmux plugin manager (tpm) if it is not already
 
 TPM_PATH=~/.tmux/plugins/tpm
 
-if [ ! -d $TPM_PATH ]; then 
+if [ ! -d $TPM_PATH ]; then
 echo 'Installing tmux plugin manager...'
     git clone https://github.com/tmux-plugins/tpm $TPM_PATH
 else
-    echo 'Tpm seems to be already installed' 
-fi 
+    echo 'Tpm seems to be already installed'
+fi
