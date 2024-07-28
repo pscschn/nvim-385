@@ -12,16 +12,21 @@ RUN apk add \
     gzip \ 
     tmux \
     curl \
-    bash; 
+    bash \
+    ncurses ncurses-dev ncurses-libs ncurses-terminfo \
+    make \
+    cmake; 
 
-WORKDIR ${TMP_DIR}/nvim-385
+WORKDIR /usr/local/src/nvim-385
+
 COPY scripts scripts
-
+COPY src src
+COPY justfile .
+    
 # Install requirements
-WORKDIR ${TMP_DIR}/nvim-385/scripts/install
+RUN source scripts/install-all.zsh && \
+    just setup;
 
-RUN source ./install-nvim.zsh && \
-    source ./install-ripgrep.zsh && \
-    source ./install-just.zsh
 
+ENTRYPOINT ["tail", "-f", "/dev/null"]
 #RUN source ./install-tmux.zsh

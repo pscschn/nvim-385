@@ -9,7 +9,7 @@
 #       will be downloaded to ! without a trailing slash !
 
 : "${NVIM_VER:=0.9.5}"
-: "${SRC_DIR:=/usr/local/src/nvim-linux64}"
+: "${SRC_DIR:=/usr/local/src}"
 
 if [ ! -d "$SRC_DIR" ]; then
   mkdir -p "$SRC_DIR"
@@ -20,5 +20,6 @@ echo "Installing nvim ${NVIM_VER}...";
 echo -ne '[                                                       ] (0%)\r';
 curl -sL https://github.com/neovim/neovim/releases/download/v${NVIM_VER}/nvim-linux64.tar.gz | tar -xz -C "$SRC_DIR";
 echo -ne '[###########################                            ] (50%)\r';
-ln -s "$SRC_DIR"/bin/nvim /usr/bin/nvim;
+ln -s "$SRC_DIR"/nvim-linux64/bin/nvim /usr/bin/nvim;
+export PATH="$SRC_DIR/nvim-linux64/bin:$PATH"
 echo -ne '[#######################################################] (100%)\r\n';
