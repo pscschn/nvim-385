@@ -3,6 +3,6 @@ services:
   nvim-385: 
     build: 
       context: .
-      dockerfile: ./dockerfile
+      dockerfile: ./Dockerfile
     image: nvim-385
     container_name: nvim-385

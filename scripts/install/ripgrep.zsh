@@ -9,6 +9,8 @@
 # - SRC_DIR: specify directory where ripgrep binaries
 #       will be downloaded to ! without a trailing slash !
 
+set -eu;
+
 : "${RIPGREP_VER:=14.1.0}"
 : "${SRC_DIR:=/usr/local/src}"
 
@@ -16,7 +18,6 @@ if [ ! -d "$SRC_DIR" ]; then
   mkdir -p "$SRC_DIR"
 fi
 
-set -eu;
 echo "Installing ripgrep ${RIPGREP_VER}...";
 echo -ne '[                                                       ] (0%)\r';
 curl -sL \

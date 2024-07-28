@@ -23,6 +23,7 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
+[![Docker][docker-shield]][license-url]
 
 
 
@@ -55,7 +56,7 @@ The source directory will be readable similar to the settings of a gui based cod
 Even without knowing the structure, you should be guided to your desired target setting and intuitively discover something like "code completion" under a more general descriptor like "Intellisense" just by looking at the directory structure (for example).
 It should not be necessary to rummage through countless files or to research any documentation to get an idea of what plugin xz does. 
 
->There is already a [template structure](./template/readme.md) provided within this >repo that explains this idea in a more non-functional depth.
+> There is already a [template structure](./template/readme.md) provided within this repo that depicts this idea  more concretely.
 
 
 
@@ -73,3 +74,7 @@ It should not be necessary to rummage through countless files or to research any
 [issues-url]: https://github.com/pscschn/nvim-385/issues
 [license-shield]: https://img.shields.io/github/license/pscschn/nvim-385.svg?style=for-the-badge
 [license-url]: https://github.com/pscschn/nvim-385/blob/master/LICENSE.txt
+[docker-shield]: https://img.shields.io/badge/Docker-1D63ED?style=for-the-badge&logo=docker&logoColor=white
+[docker-url]: https://www.docker.com/
+[nvim-shield]: https://img.shields.io/badge/NeoVim-%23092E20.svg?&style=for-the-badge&logo=neovim&logoColor=white
+[nvim-url]: https://neovim.io/

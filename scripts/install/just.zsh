@@ -3,6 +3,7 @@
 # Installs just which is just a command runner
 
 set -eu;
+
 echo "Installing just...";
 echo -ne '[                                                       ] (0%)\r';
 mkdir -p ~/bin && \
