@@ -1,5 +1,5 @@
 #! /bin/zsh
-
+#
 # Installs tmux plugin manager (tpm) if it is not already
 
 TPM_PATH=~/.tmux/plugins/tpm
