@@ -48,7 +48,15 @@ So, I've decided to create my own project, which will solve these problems for m
 
 ### Solution Strategy
 
-My idea is to build the nvim configuration like a coding project. Nvim plugins will be grouped as standardized lua modules based on their function and effect on nvim. The source directory will be easy to read, similar to opening the settings in a gui based code editor. Instead of seeing a random plugin name in some file with a dosand additional lines, you'll intuitively discover settings, like "code completion" under a parent module "Intellisense" (for example) just by looking at the directory structure without having to wade through any files or documentation. Modules will be loaded anonymously and automatically so adding, replacing or removing certain plugins will be a cake.
+The idea is to standardize a structure for better comprehention of the config without knowing plugin specifics. 
+Plugins will be grouped as lua modules based on their effect on nvim. 
+The source directory will be readable similar to the settings of a gui based code editor. 
+
+Even without knowing the structure, you should be guided to your desired target setting and intuitively discover something like "code completion" under a more general descriptor like "Intellisense" just by looking at the directory structure (for example).
+It should not be necessary to rummage through countless files or to research any documentation to get an idea of what plugin xz does. 
+
+>There is already a [template structure](./template/readme.md) provided within this >repo that explains this idea in a more non-functional depth.
+
 
 
 
