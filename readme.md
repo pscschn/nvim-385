@@ -23,7 +23,8 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
-[![Docker][docker-shield]][license-url]
+[![Docker][docker-shield]][docker-url]
+[![Nvim][nvim-shield]][nvim-url]
 
 
 
