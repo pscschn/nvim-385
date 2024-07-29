@@ -2,7 +2,10 @@
 #
 # Installs tmux plugin manager (tpm) if it is not already
 
-TPM_PATH=~/.tmux/plugins/tpm
+set -eu;
+
+: "${TPM_PATH:=~/.tmux/plugins/tpm}"
+
 
 if [ ! -d $TPM_PATH ]; then
 echo 'Installing tmux plugin manager...'
