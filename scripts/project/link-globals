@@ -1,4 +1,4 @@
-#! /bin/zsh 
+#! /bin/bash
 #
 # Creates symlink for src/globals
 # to use containing lua scripts globally

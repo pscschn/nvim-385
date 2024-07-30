@@ -1,4 +1,4 @@
-#! /bin/zsh
+#! /bin/bash
 #
 # publishes the build as nvim config
 

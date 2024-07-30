@@ -1,4 +1,4 @@
-#! /bin/zsh
+#! /bin/bash
 #
 # builds the nvim config
 
