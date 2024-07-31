@@ -1,1 +1,0 @@
-return require('nvim-385.plugin'):new(require("nvim-385.utils").pwd())
