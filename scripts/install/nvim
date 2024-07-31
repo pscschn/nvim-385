@@ -1,8 +1,8 @@
-#! /bin/zsh
+#! /bin/bash
 #
 # Installs nvim in desired version
 #
-# Vars: 
+# Vars:
 # - NVIM_VER: specify the desired nvim version
 #
 # - SRC_DIR: specify directory where nvim binaries

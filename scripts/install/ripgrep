@@ -1,9 +1,9 @@
-#! /bin/zsh
+#! /bin/bash
 #
 # Installs ripgrep which is a line-oriented search tool
 # that recursively searches the current directory for a regex pattern
 #
-# Vars: 
+# Vars:
 # - RIPGREP_VER: specify the desired ripgrep version
 #
 # - SRC_DIR: specify directory where ripgrep binaries

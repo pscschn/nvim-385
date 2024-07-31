@@ -1,8 +1,8 @@
 version: '3.8'
-services: 
-  nvim-385: 
-    build: 
+services:
+  nvim-385:
+    build:
       context: .
       dockerfile: ./Dockerfile
     image: nvim-385
-    container_name: nvim-385
+    container_name: nvim

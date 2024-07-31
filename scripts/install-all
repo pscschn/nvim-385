@@ -1,0 +1,9 @@
+#! /bin/bash
+#
+# Runs the scripts inside ./install
+
+: "${ROOT_DIR:=$(pwd)}"
+
+source $ROOT_DIR/scripts/install/nvim
+source $ROOT_DIR/scripts/install/ripgrep
+source $ROOT_DIR/scripts/install/just

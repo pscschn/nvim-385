@@ -1,19 +1,20 @@
 #!/usr/bin/env just --justfile
 
 build:
-  source scripts/project/build.zsh
+  ./scripts/project/build
 
 publish:
-  source scripts/project/publish.zsh
+  ./scripts/project/publish
 
-setup: 
-  source scripts/project/link-globals.zsh
+setup:
+  ./scripts/project/link-globals # probably requires sudo
 
 install:
-  source scripts/install-all.zsh
+  ./scripts/install-all
 
 container action:
-  if [ {{action}} = "build" ]; then podman build -t nvim-385 . ;fi
+  if [ {{action}} = "build" ]; then podman build -t nvim-385 . && podman container create --name nvim --no-start nvim-385 ;fi
+  if [ {{action}} = "start" ]; then podman start nvim-385 ;fi
 
 test script:
   nvim -l $(realpath {{script}})
