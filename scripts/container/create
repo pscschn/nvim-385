@@ -1,0 +1,6 @@
+#! /bin/bash
+#
+# Creates a container for nvim-385
+#
+
+podman container create --replace --name nvim nvim-385

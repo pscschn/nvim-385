@@ -21,7 +21,7 @@ COPY src src
 COPY justfile .
 
 # Install requirements
-RUN source scripts/install-all.zsh
+RUN source scripts/install-all
 
 # configure nvim
 RUN just setup && \

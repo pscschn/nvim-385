@@ -3,3 +3,4 @@ name=Fedora 40 - $basearch
 baseurl=https://dl.fedoraproject.org/pub/fedora/linux/releases/40/Everything/$basearch/os/
 enabled=1
 gpgcheck=0
+sslverify=0

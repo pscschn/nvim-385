@@ -1,0 +1,6 @@
+#! /bin/bash
+#
+# Starts an container for nvim-385
+#
+
+podman start nvim-385

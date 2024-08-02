@@ -1,20 +1,23 @@
 #!/usr/bin/env just --justfile
 
+PS := "./scripts/project" # project scripts
+CS := "./scripts/container" # container scripts
+
 build:
-  ./scripts/project/build
+  {{PS}}/build
 
 publish:
-  ./scripts/project/publish
+  {{PS}}/publish
 
 setup:
-  ./scripts/project/link-globals # probably requires sudo
+  {{PS}}/link-globals # probably requires sudo
 
 install:
   ./scripts/install-all
 
 container action:
-  if [ {{action}} = "build" ]; then podman build -t nvim-385 . && podman container create --name nvim --no-start nvim-385 ;fi
-  if [ {{action}} = "start" ]; then podman start nvim-385 ;fi
+  if [ {{action}} = "build" ]; then {{CS}}/build && {{CS}}/create; fi
+  if [ {{action}} = "start" ]; then {{CS}}/start; fi
 
 test script:
   nvim -l $(realpath {{script}})
