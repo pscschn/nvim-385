@@ -1,6 +1,9 @@
 FROM docker.io/redhat/ubi9-minimal:latest
 
-ARG NVIM_VER=0.9.5
+USER nvim
+
+ARG NVIM_VER=0.10.1
+ARG JUST_VER=1.33.0
 ARG RIPGREP_VER=14.1.0
 ARG TMUX_PREFIX="C-b"
 
@@ -11,8 +14,10 @@ COPY container/repos/fedora.repo \
 RUN microdnf -y install \
     tar \
     gzip \
-    tmux && \
-    microdnf clean all
+    tmux \
+    git \
+    clang \
+    && microdnf clean all
 
 WORKDIR /usr/local/src/nvim-385
 

@@ -3,4 +3,4 @@
 # Creates a container for nvim-385
 #
 
-podman container create --replace --name nvim nvim-385
+podman container create --replace --name nvim-385 nvim-385

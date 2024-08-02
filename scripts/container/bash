@@ -1,0 +1,6 @@
+#! /bin/bash
+#
+# Runs bash inside a running container for nvim-385
+#
+
+podman exec -it nvim-385 /bin/bash

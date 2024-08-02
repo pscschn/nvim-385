@@ -10,7 +10,7 @@
 
 set -eu;
 
-: "${NVIM_VER:=0.9.5}"
+: "${NVIM_VER:=0.10.1}"
 : "${SRC_DIR:=/usr/local/src}"
 
 if [ ! -d "$SRC_DIR" ]; then
