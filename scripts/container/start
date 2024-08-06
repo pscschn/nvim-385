@@ -3,4 +3,10 @@
 # Starts an container for nvim-385
 #
 
-podman start nvim-385
+set -eu;
+
+: "${CONTAINER_NAME:=nvim-385}"
+
+echo "Trying to start container $CONTAINER_NAME..."
+
+podman start $CONTAINER_NAME

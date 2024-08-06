@@ -1,0 +1,6 @@
+#!/bin/sh
+#
+# A wrapper for tar which forces use of certain
+# flags for tar operations inside the container
+
+exec /bin/tar --no-same-owner --no-same-permissions "$@"

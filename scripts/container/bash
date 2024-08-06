@@ -1,6 +1,21 @@
 #! /bin/bash
 #
 # Runs bash inside a running container for nvim-385
-#
+
+set -eu;
+
+: "${CONTAINER_NAME:=nvim-385}"
+
+echo "Trying to run bash inside $CONTAINER_NAME..."
+
+if ! podman ps -a --format '{{.Names}}' | grep -w "$CONTAINER_NAME" > /dev/null; then
+    echo "Container $CONTAINER_NAME does not exist."
+    ./scripts/container/create
+fi
+
+if ! podman ps --format '{{.Names}}' | grep -w "$CONTAINER_NAME" > /dev/null; then
+  echo "Container $CONTAINER_NAME is not running."
+  ./scripts/container/start
+fi
 
 podman exec -it nvim-385 /bin/bash

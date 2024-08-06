@@ -3,4 +3,18 @@
 # Creates a container for nvim-385
 #
 
-podman container create --replace --name nvim-385 nvim-385
+set -eu;
+
+: "${CONTAINER_NAME:=nvim-385}"
+: "${IMAGE_NAME:=nvim-385}"
+: "${IMAGE_TAG:=latest}"
+
+
+echo "Trying to create container $CONTAINER_NAME..."
+
+if ! podman images --format '{{.Repository}}:{{.Tag}}' | grep -w "$IMAGE_NAME:$IMAGE_TAG" > /dev/null; then
+    echo "Image $IMAGE_NAME:$IMAGE_TAG does not exist."
+    ./scripts/container/build
+fi
+
+podman container create --replace --name $CONTAINER_NAME $IMAGE_NAME

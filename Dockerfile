@@ -1,7 +1,5 @@
 FROM docker.io/redhat/ubi9-minimal:latest
 
-USER nvim
-
 ARG NVIM_VER=0.10.1
 ARG JUST_VER=1.33.0
 ARG RIPGREP_VER=14.1.0
@@ -14,10 +12,14 @@ COPY container/repos/fedora.repo \
 RUN microdnf -y install \
     tar \
     gzip \
-    tmux \
+    tmux ncurses ncurses-libs \
     git \
     clang \
+    unzip \
     && microdnf clean all
+
+COPY container/bin/tar /usr/local/bin/tar
+RUN chmod +x /usr/local/bin/tar
 
 WORKDIR /usr/local/src/nvim-385
 

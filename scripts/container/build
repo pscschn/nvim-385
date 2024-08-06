@@ -3,4 +3,8 @@
 # Builds an image for nvim-385
 #
 
-podman build -t nvim-385 .
+: "${IMAGE_NAME:=nvim-385}"
+
+echo "Trying to build image $IMAGE_NAME..."
+
+podman build -t $IMAGE_NAME .
