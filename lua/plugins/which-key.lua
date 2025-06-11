@@ -8,7 +8,11 @@ return {
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
-    opts = {},
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    },
     keys = {
       {
         "<leader>?",
@@ -20,11 +24,11 @@ return {
     },
     config = function()
       local wk = require("which-key")
-      --local icons = require("mini.icons")
+      local icons = require("mini.icons")
 
-      --local function colored(icon, hl_group)
-        --return "%#" .. hl_group .. "#" .. icon .. "#%*"
-      --end
+      local function colored(icon, hl_group)
+        return "%#" .. hl_group .. "#" .. icon .. "#%*"
+      end
       wk.add({
         { "<leader>f", group = "Fuzzy Finder" },
         { "<leader>d", group = "Debug" },
