@@ -1,8 +1,16 @@
 return {
   "mrcjkb/rustaceanvim",
   version = "^6",
-  -- TODO: only load when there is a rust project
   lazy = true,
+  keys = {
+    --{ "<leader>ra", mode = "n", function()
+    --vim.cmd.RustLsp('codeAction')
+    --end, desc = "Rust action" },
+    --{ "K", mode = "n", function()
+    --vim.cmd.RustLsp({"hover", "actions"})
+    --end
+    --}
+  },
   config = function(_, opts)
     require("which-key").add({ "<leader>l", group = "Rust" })
 

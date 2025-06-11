@@ -27,6 +27,7 @@ return {
       require("neotest").setup({
         adapters = {
           require("neotest-vstest")({
+            -- table is passed directly to DAP when debugging tests.
             dap_settings = {
               adapter = netcoredbg_path,
             },

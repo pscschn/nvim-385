@@ -21,9 +21,9 @@ return {
       ["<CR>"] = cmp.mapping.confirm({ select = false }),
       ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
-          cmp.confirm({ select = true })
+          cmp.confirm({ select = true }) -- Confirm selection
         else
-          fallback()
+          fallback() -- Default <Tab> behavior
         end
       end, { "i", "s" }),
     })
@@ -44,6 +44,7 @@ return {
     }
     opts.experimental = {}
     opts.experimental.ghost_text = true
+    -- Customization for Pmenu
     vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#26233a", fg = "NONE" })
     vim.api.nvim_set_hl(0, "Pmenu", { fg = "#31748f", bg = "#22252A" })
     vim.api.nvim_set_hl(0, "CmpItemMenu", { fg = "#26233a", bg = "NONE", italic = true })
