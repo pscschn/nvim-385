@@ -10,6 +10,9 @@ M.lsp.install = function()
   if not package:is_installed() then
     package:install()
   end
+end
+
+M.lsp.config = function ()
   require("lazy").load({ plugins = {
     "rustaceanvim",
   } })
