@@ -12,7 +12,7 @@ M.lsp.install = function()
   end
 end
 
-M.lsp.config = function ()
+M.lsp.config = function()
   require("lazy").load({ plugins = {
     "rustaceanvim",
   } })
