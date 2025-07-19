@@ -9,9 +9,12 @@ vim.opt.termguicolors = true
 
 vim.o.signcolumn = "yes"
 
-vim.diagnostic.config({
-  virtual_text = true,
-})
-
+vim.diagnostic.config(
+    {
+        virtual_text = false
+    }
+)
+vim.o.shiftwidth = 2
+vim.o.tabstop = 2
 vim.lsp.inlay_hint.enable(true)
 --vim.o.winbar = " "
