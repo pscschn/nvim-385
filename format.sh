@@ -4,5 +4,6 @@ for element in "${files[@]}"
 do
   x=$(bunx lua-fmt $element)
   #echo "$x"
+  echo "$element"
   echo "$x" > $element
 done
