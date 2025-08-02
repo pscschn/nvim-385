@@ -1,8 +1,15 @@
-## my nvim config ( straight outta 385 )
+## Nvim-385
 
-Run a podman container with this config instantly
+This is my personal nvim config.
+
+---
+
+![Screenshot](./screenshot.png "example")
+
+---
+
+Run a podman container to test this config instantly
 
 ```shell
 bash <(curl -s https://raw.githubusercontent.com/pscschn/nvim-385/refs/heads/master/run.sh)
 ```
-.
