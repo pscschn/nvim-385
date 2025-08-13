@@ -1,6 +1,6 @@
 return {
   ui = {
-    bg = "#0d0c0c",
+    bg = "#121212",
     -- bg = "#181820",
     --dragonBlack0 = "#0d0c0c",
   },
