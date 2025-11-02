@@ -1,12 +1,11 @@
+local name = "lua-language-server"
 local settings = require("config.settings")
 
-local M = {}
-M.lsp = {}
-
-local name = "lua-language-server"
+local M = { lsp = {} }
 
 M.lsp.install = function()
   local server = require("mason-registry").get_package(name)
+
   if not server:is_installed() then
     vim.notify("Installing" .. name)
     server:install()
@@ -15,11 +14,11 @@ end
 
 M.lsp.config = function()
   local root = settings.dir.mason .. "/" .. name .. "/"
-  local lspconfig = require("lspconfig")
-  lspconfig.lua_ls.setup({
+
+  vim.lsp.config("lua_ls", {
     cmd = { root .. name },
     filetypes = { "lua" },
-    root_dir = lspconfig.util.root_pattern(".git", "*.rockspec", "init.lua"),
+    root_markers = { ".git", "*.rockspec", "init.lua" },
     capabilities = require("cmp_nvim_lsp").default_capabilities(),
     settings = {
       Lua = {
@@ -34,7 +33,7 @@ M.lsp.config = function()
           checkThirdParty = false,
         },
         telemetry = {
-          enable = false, -- Stop sending telemetry data
+          enable = false,
         },
       },
     },

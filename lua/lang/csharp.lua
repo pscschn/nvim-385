@@ -1,12 +1,16 @@
-local M = {}
-M.lsp = {}
-M.dap = {}
-M.dap.adapter = "netcoredbg"
+local dap_adapter = "netcoredbg"
+local lsp_server = "roslyn"
+
+local M = { lsp = {}, dap = { bin = nil } }
+
+---@type string dap binary
+M.dap.bin = require("config.settings").dir.mason .. "/netcoredbg/netcoredbg"
 
 M.lsp.install = function()
-  local server = require("mason-registry").get_package("roslyn")
+  local server = require("mason-registry").get_package(lsp_server)
 
   if not server:is_installed() then
+    vim.notify("Installing " .. lsp_server)
     require("mason").setup({
       registries = {
         "github:mason-org/mason-registry",
@@ -25,29 +29,32 @@ M.lsp.config = function()
       "nvim-lsp-endhints",
     },
   })
+
   return M
 end
 
-M.dap.install = function()
-  local package = require("mason-registry").get_package(M.dap.adapter)
+---@type table
+local dap = M.dap
+
+dap.install = function()
+  local package = require("mason-registry").get_package(dap_adapter)
   if not package:is_installed() then
+    vim.notify("Installing " .. dap_adapter)
     package:install()
   end
+
   return M
 end
 
-M.dap.config = function()
-  local bin = require("config.settings").dir.mason .. "/netcoredbg/netcoredbg"
-  local dap = require("dap")
-
-  dap.adapters.netcoredbg = {
+dap.config = function()
+  require("dap").adapters[dap_adapter] = {
     type = "executable",
-    command = bin,
+    command = dap.bin,
     args = { "--interpreter=vscode" },
   }
 end
 
-M.dap._config = function()
+dap._config = function()
   require("lazy").load({
     plugins = {
       "nvim-dap-cs",

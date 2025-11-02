@@ -1,25 +1,29 @@
 local settings = require("config.settings")
-local M = {}
-M.lsp = {}
-M.lsp.server = "gopls"
-M.dap = {}
-M.dap.server = "delve"
+
+local lsp_server = "gopls"
+local dap_server = "delve"
+
+local M = { lsp = {}, dap = { bin = nil } }
+
+--- @type string dap binary
+M.dap.bin = settings.dir.mason .. "/" .. dap_server .. "/dlv"
 
 M.lsp.install = function()
-  local package = require("mason-registry").get_package(M.lsp.server)
+  local package = require("mason-registry").get_package(lsp_server)
   if not package:is_installed() then
+    vim.notify("Installing" .. lsp_server)
     package:install()
   end
 end
 
 M.lsp.config = function()
-  local config = require("lspconfig")
+  local config = vim.lsp.config
 
-  local bin = settings.dir.mason .. "/" .. M.lsp.server .. "/" .. M.lsp.server
+  local lsp_bin = settings.dir.mason .. "/" .. lsp_server .. "/" .. lsp_server
   config.gopls.setup({
-    cmd = { bin },
+    cmd = { lsp_bin },
     filetypes = { "go" },
-    root_dir = config.util.root_pattern("go.mod"),
+    root_markers = { "go.mod" },
     capabilities = require("cmp_nvim_lsp").default_capabilities(),
     settings = {
       gopls = {
@@ -50,8 +54,9 @@ M.lsp.config = function()
 end
 
 M.dap.install = function()
-  local package = require("mason-registry").get_package(M.dap.server)
+  local package = require("mason-registry").get_package(dap_server)
   if not package:is_installed() then
+    vim.notify("Installing" .. dap_server)
     package:install()
   end
 end
@@ -63,17 +68,6 @@ M.dap.config = function()
       "nvim-dap-virtual-text",
     },
   })
-  --local bin = settings.dir.mason .. "/" .. M.dap.server .. "/dlv"
-
-  --local dap = require("dap")
-  --dap.adapters.delve = {
-  --type = "server",
-  --port = "${port}",
-  --executable = {
-  --command = bin,
-  --args = {"dap", "-l", "127.0.0.1:${port}"}
-  --}
-  --}
 end
 
 return M

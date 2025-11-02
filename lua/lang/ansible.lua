@@ -1,32 +1,34 @@
-local M = {}
-M.lsp = {}
-M.lsp.server = "ansible-language-server"
-M.lsp.linter = "ansible-lint"
+local server = "ansible-language-server"
+local linter = "ansible-lint"
+
+local M = { lsp = {} }
 
 function M.lsp.install()
   local registry = require("mason-registry")
 
-  local lsp_pkg = registry.get_package(M.lsp.server)
+  local lsp_pkg = registry.get_package(server)
   if not lsp_pkg:is_installed() then
+    vim.notify("Installing " .. server)
     lsp_pkg:install()
   end
 
-  local lint_pkg = registry.get_package(M.lsp.linter)
+  local lint_pkg = registry.get_package(linter)
   if not lint_pkg:is_installed() then
+    vim.notify("Installing " .. linter)
     lint_pkg:install()
   end
 end
 
 function M.lsp.config()
   local root = require("config.settings").dir.mason .. "/"
-  local lspconfig = require("lspconfig")
-  local lsp_bin = root .. M.lsp.server .. "/node_modules/.bin/" .. M.lsp.server
-  local lint_bin = root .. M.lsp.linter .. "/venv/bin/" .. M.lsp.linter
 
-  lspconfig.ansiblels.setup({
+  local lsp_bin = root .. server .. "/node_modules/.bin/" .. server
+  local lint_bin = root .. linter .. "/venv/bin/" .. linter
+
+  vim.lsp.config("ansiblels", {
     cmd = { lsp_bin, "--stdio" },
     filetypes = { "yaml", "yml" },
-    root_dir = lspconfig.util.root_pattern("inventory*", ".git"),
+    root_markers = { "inventory*", ".git" },
     capabilities = require("cmp_nvim_lsp").default_capabilities(),
     settings = {
       ansible = {

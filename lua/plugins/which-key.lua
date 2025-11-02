@@ -20,11 +20,7 @@ return {
     },
     config = function()
       local wk = require("which-key")
-      local icons = require("mini.icons")
 
-      local function colored(icon, hl_group)
-        return "%#" .. hl_group .. "#" .. icon .. "#%*"
-      end
       wk.add({
         { "<leader>f", group = "Fuzzy Finder" },
         { "<leader>l", group = "Lang" },
