@@ -25,6 +25,8 @@ M.lsp.config = function()
     root_markers = { "package.json" },
     capabilities = require("cmp_nvim_lsp").default_capabilities(),
   })
+
+  require("lib.lsp").set_keymaps()
 end
 
 M.dap.install = function()

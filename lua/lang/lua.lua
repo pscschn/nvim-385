@@ -38,6 +38,8 @@ M.lsp.config = function()
       },
     },
   })
+
+  require("lib.lsp").set_keymaps()
 end
 
 return M

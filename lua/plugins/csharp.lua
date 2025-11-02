@@ -1,6 +1,7 @@
 local get_netcoredbg_path = function()
   return require("lang.csharp").dap.bin
 end
+
 return {
   {
     "seblyng/roslyn.nvim",
@@ -32,10 +33,7 @@ return {
           }),
         },
       })
-      local keys = require("lib.lsp").keys.on_attach
-      for _, mapping in ipairs(keys) do
-        vim.keymap.set(mapping.mode, mapping.lhs, mapping.rhs, mapping.opts)
-      end
+      require("lib.lsp").set_keymaps()
     end,
   },
 }
