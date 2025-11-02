@@ -75,30 +75,30 @@ return {
         sections = { "watches", "scopes", "exceptions", "breakpoints", "threads", "repl", "console" },
         controls = {
           enabled = true,
-            position = "right",
-            buttons = {
-                "play",
-                "step_into",
-                "step_over",
-                "step_out",
-                "step_back",
-                "run_last",
-                "terminate",
-                "disconnect",
-            }
+          position = "right",
+          buttons = {
+            "play",
+            "step_into",
+            "step_over",
+            "step_out",
+            "step_back",
+            "run_last",
+            "terminate",
+            "disconnect",
+          },
         },
       },
     },
-  keys = {
-    {
-      "<leader>dt",
-      mode = "n",
-      desc = "Toggle ui",
-      function()
-        require("dap-view").toggle()
-      end,
+    keys = {
+      {
+        "<leader>dt",
+        mode = "n",
+        desc = "Toggle ui",
+        function()
+          require("dap-view").toggle()
+        end,
+      },
     },
-  },
   },
 
   {
