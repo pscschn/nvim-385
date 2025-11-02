@@ -11,7 +11,6 @@ return {
       "nvim-treesitter/nvim-treesitter",
     },
     main = "roslyn",
-    keys = require("lib.lsp").keys.on_attach,
     --ft = "cs",
     config = function(_, opts)
       require("nvim-treesitter.configs").setup({
@@ -33,6 +32,10 @@ return {
           }),
         },
       })
+      local keys = require("lib.lsp").keys.on_attach
+      for _, mapping in ipairs(keys) do
+        vim.keymap.set(mapping.mode, mapping.lhs, mapping.rhs, mapping.opts)
+      end
     end,
   },
 }
