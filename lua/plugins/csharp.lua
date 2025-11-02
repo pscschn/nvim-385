@@ -1,5 +1,6 @@
-local netcoredbg_path = require("config.settings").dir.mason .. "/netcoredbg/netcoredbg"
-
+local get_netcoredbg_path = function()
+  return require("lang.csharp").dap.bin
+end
 return {
   {
     "seblyng/roslyn.nvim",
@@ -24,7 +25,7 @@ return {
           require("neotest-vstest")({
             -- table is passed directly to DAP when debugging tests.
             dap_settings = {
-              adapter = netcoredbg_path,
+              adapter = get_netcoredbg_path(),
             },
             dotnet_additional_args = {
               "-c Debug",

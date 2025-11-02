@@ -8,10 +8,10 @@ return {
   },
   keys = {
     {
-      "<leader>mo",
+      "<leader>ml",
       mode = "n",
       nil,
-      desc = "Open Picker",
+      desc = "List marks",
     },
     {
       "<leader>ma",
@@ -90,7 +90,7 @@ return {
       picker:find()
     end
 
-    vim.keymap.set("n", "<leader>mo", function()
+    vim.keymap.set("n", "<leader>ml", function()
       toggle_telescope(harpoon:list())
     end)
   end,

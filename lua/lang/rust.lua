@@ -1,13 +1,12 @@
-local M = {}
-M.lsp = {}
-M.dap = {}
-M.dap.adapter = "codelldb"
-
+local dap_adapter = "codelldb"
 local server = "rust-analyzer"
+
+local M = { lsp = {}, dap = {} }
 
 M.lsp.install = function()
   local package = require("mason-registry").get_package(server)
   if not package:is_installed() then
+    vim.notify("Installing" .. server)
     package:install()
   end
 end
@@ -21,7 +20,7 @@ M.lsp.config = function()
 end
 
 M.dap.install = function()
-  local package = require("mason-registry").get_package(M.dap.adapter)
+  local package = require("mason-registry").get_package(dap_adapter)
   if not package:is_installed() then
     package:install()
   end

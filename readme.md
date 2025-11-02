@@ -1,6 +1,6 @@
 ## Nvim-385
 
-This is my personal nvim config.
+My personal nvim config.
 
 ---
 
@@ -8,7 +8,7 @@ This is my personal nvim config.
 
 ---
 
-Run a podman container to test this config instantly
+[container/run.sh](./container/run.sh) runs a podman container with the config:
 
 ```shell
 bash <(curl -s https://raw.githubusercontent.com/pscschn/nvim-385/refs/heads/master/run.sh)

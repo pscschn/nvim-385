@@ -1,5 +1,6 @@
 local M = {}
 
+--- runs a "settings.lua" file inside the folder ".nvim"
 function M.load_settings()
   local config_path = "./.nvim/settings.lua"
 

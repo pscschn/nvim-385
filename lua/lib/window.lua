@@ -1,16 +1,8 @@
 local M = {}
 
--- get current tabpage vim.api.get_current_tabpage()
--- or vim.fn.tabpagenr()
--- get windows in tab:
---vim.api.nvim_tabpage_list_wins
--- or get the buflist directly from ccurrent tab: vim.fn.tabpagebuflist()
--- get the window buffers
---vim.api.nvim_win_get_buf({window})
---then get the bufname
-
+--- maps open buffer names to their window id's
+--- @return table<string, number> map <buffer name, window id>
 M.tabpage_map_win_names = function()
-  --local buflist = vim.fn.tabpagebuflist()
   local winlist = vim.api.nvim_tabpage_list_wins(vim.fn.tabpagenr())
   local map = {}
   for _, id in ipairs(winlist) do
@@ -20,6 +12,9 @@ M.tabpage_map_win_names = function()
   return map
 end
 
+--- executes a callback that takes name and id of
+--- each buffer open in the current tab
+--- @param func fun(id: number, bufname: string) callback
 M.each_tabpage_win_name = function(func)
   local buflist = vim.fn.tabpagebuflist()
   for _, id in ipairs(buflist) do

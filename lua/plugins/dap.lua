@@ -30,8 +30,6 @@ return {
       { "<leader>d?<F10>", "<cmd>DapStepOver<CR>", mode = "n", desc = "Step Over" },
       { "<F12>", "<cmd>DapStepOut<CR>", mode = "n", desc = "Step Out" },
       { "<leader>d?<F12>", "<cmd>DapStepOut<CR>", mode = "n", desc = "Step Out" },
-      { "<F6>", "<cmd>ZoomWinTabToggle<CR>", mode = "n", desc = "Toggle Zoom" },
-      { "<leader>d?<F6>", "<cmd>ZoomWinTabToggle<CR>", mode = "n", desc = "Toggle Zoom" },
       {
         "<F4>",
         function()
@@ -68,32 +66,41 @@ return {
     config = function() end,
   },
   {
-    "rcarriga/nvim-dap-ui",
-    keys = {
-      {
-        "<leader>dt",
-        mode = "n",
-        desc = "Toggle ui",
-        function()
-          require("dapui").toggle()
-        end,
+    "igorlfs/nvim-dap-view",
+    ---@module 'dap-view'
+    ---@type dapview.Config
+    opts = {
+      winbar = {
+        show = true,
+        sections = { "watches", "scopes", "exceptions", "breakpoints", "threads", "repl", "console" },
+        controls = {
+          enabled = true,
+            position = "right",
+            buttons = {
+                "play",
+                "step_into",
+                "step_over",
+                "step_out",
+                "step_back",
+                "run_last",
+                "terminate",
+                "disconnect",
+            }
+        },
       },
     },
-    config = function(_, opts)
-      opts.layouts = {
-        {
-          elements = {
-            "repl",
-            "stacks",
-            "scopes",
-          },
-          size = 0.3,
-          position = "bottom",
-        },
-      }
-      require("dapui").setup(opts)
-    end,
+  keys = {
+    {
+      "<leader>dt",
+      mode = "n",
+      desc = "Toggle ui",
+      function()
+        require("dap-view").toggle()
+      end,
+    },
   },
+  },
+
   {
     "theHamsta/nvim-dap-virtual-text",
     dependencies = {

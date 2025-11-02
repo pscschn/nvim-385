@@ -31,9 +31,8 @@ return {
     "nvim-neotest/nvim-nio",
     "nvim-lua/plenary.nvim",
     "antoinemadec/FixCursorHold.nvim",
-    --"nvim-treesitter/nvim-treesitter"
   },
-  config = function(_, opts)
+  config = function(_, _)
     require("which-key").add({ "<leader>t", group = "Test" })
 
     vim.keymap.set("n", "<leader>tt", function()

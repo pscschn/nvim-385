@@ -1,28 +1,24 @@
 local settings = require("config.settings")
+local lsp_server = "vue-language-server"
 
-local M = {}
-M.lsp = {}
-M.lsp.server = "vue-language-server"
+local M = { lsp = {} }
 
 M.lsp.install = function()
-  local name = M.lsp.server
-  local server = require("mason-registry").get_package(name)
+  local server = require("mason-registry").get_package(lsp_server)
   if not server:is_installed() then
-    vim.notify("Installing" .. name)
+    vim.notify("Installing" .. lsp_server)
     server:install()
   end
 end
 
 M.lsp.config = function()
-  local name = M.lsp.server
-  local root = settings.dir.mason .. "/" .. name .. "/"
-  local lspconfig = require("lspconfig")
+  local root = settings.dir.mason .. "/" .. lsp_server .. "/"
+  local lspconfig = vim.lsp.config
 
   lspconfig.volar.setup({
-    cmd = { "npm", "--prefix", root, "exec", name, "--", "--stdio" },
-    --on_attach = utils.lsp.on_attach,
+    cmd = { "npm", "--prefix", root, "exec", lsp_server, "--", "--stdio" },
     filetypes = { "vue", "javascript", "typescript", "typescriptreact" },
-    root_dir = lspconfig.util.root_pattern("package.json", "vite.config.js"),
+    root_markers = { "package.json", "vite.config.js" },
     capabilities = require("cmp_nvim_lsp").default_capabilities(),
     init_options = {
       vue = {
