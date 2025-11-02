@@ -50,6 +50,8 @@ Clangd.lsp.config = function(args)
     capabilities = require("cmp_nvim_lsp").default_capabilities(),
     settings = {},
   })
+
+  require("lib.lsp").set_keymaps()
 end
 
 M.lsp.install = function()

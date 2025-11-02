@@ -51,6 +51,8 @@ M.lsp.config = function()
       })
     end,
   })
+
+  require("lib.lsp").set_keymaps()
 end
 
 M.dap.install = function()
