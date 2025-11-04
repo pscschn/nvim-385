@@ -13,9 +13,8 @@ end
 
 M.lsp.config = function()
   local root = settings.dir.mason .. "/" .. lsp_server .. "/"
-  local lspconfig = vim.lsp.config
 
-  lspconfig.volar.setup({
+  vim.lsp.config("volar", {
     cmd = { "npm", "--prefix", root, "exec", lsp_server, "--", "--stdio" },
     filetypes = { "vue", "javascript", "typescript", "typescriptreact" },
     root_markers = { "package.json", "vite.config.js" },
