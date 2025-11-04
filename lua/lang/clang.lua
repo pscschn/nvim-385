@@ -78,12 +78,12 @@ M.dap.install = function()
   })
 end
 
----@class DapCfg
+---@class ClangdDapCfg
 ---@field bin? string path to executable
 ---@field env? table environment variables
 ---@field args? [string] launch arguments
 
---- @param cfg DapCfg
+--- @param cfg ClangdDapCfg
 M.dap.config = function(cfg)
   if not cfg then
     cfg = {}
