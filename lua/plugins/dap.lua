@@ -63,7 +63,6 @@ return {
         desc = "Terminate",
       },
     },
-    config = function() end,
   },
   {
     "igorlfs/nvim-dap-view",
