@@ -6,7 +6,7 @@ local M = { lsp = {}, dap = {} }
 M.lsp.install = function()
   local package = require("mason-registry").get_package(server)
   if not package:is_installed() then
-    vim.notify("Installing" .. server)
+    vim.notify("Installing " .. server)
     package:install()
   end
 end
