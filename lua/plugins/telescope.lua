@@ -5,6 +5,14 @@ return {
     "nvim-telescope/telescope-symbols.nvim",
   },
   opts = {
+    file_ignore_patterns = {
+      "^.git/",
+      "%.git/",
+      "node_modules/",
+      "%.jpg$", "%.png$", "%.jpeg$", "%.gif$",
+      "%.o$", "%.obj$", "%.dll$", "%.exe$",
+      "%.so$",
+    },
     pickers = {
       find_files = {
         hidden = true,
