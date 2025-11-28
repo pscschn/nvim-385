@@ -81,6 +81,7 @@ end
 ---@class ClangdDapCfg
 ---@field bin? string path to executable
 ---@field env? table environment variables
+---@field makeArgs? function provide additional args on launch
 ---@field args? [string] launch arguments
 
 --- @param cfg ClangdDapCfg
@@ -124,7 +125,12 @@ M.dap.config = function(cfg)
       end,
       cwd = "${workspaceFolder}",
       stopOnEntry = false,
-      args,
+      args = function ()
+        if cfg.makeArgs ~= nil then
+          args = cfg.makeArgs(args)
+        end
+        return args
+      end,
       runInTerminal = false,
       env,
     },
