@@ -2,12 +2,6 @@
 
 My personal nvim config.
 
----
-
-![Screenshot](./screenshot.png "example")
-
----
-
 [container/run.sh](./container/run.sh) runs a podman container with this config.
 
 ```shell
