@@ -4,10 +4,10 @@ return {
     lazy = true,
     opts = {
       icons = {
-        type = "󰰦 ",
-        parameter = "󰰚 ",
-        offspec = " ", -- hint kind not defined in official LSP spec
-        unknown = " ", -- hint kind is nil
+        type = vim.g.signs.diagnostic.type,
+        parameter = vim.g.signs.diagnostic.parameter,
+        offspec = vim.g.signs.diagnostic.offspec,
+        unknown = vim.g.signs.diagnostic.unknown,
       },
       label = {
         truncateAtChars = 20,
@@ -29,7 +29,7 @@ return {
   {
     "hedyhli/outline.nvim",
     config = function()
-      vim.keymap.set("n", "<leader>lo", "<cmd>Outline<CR>", { desc = "Toggle Outline" })
+      vim.keymap.set("n", vim.g.keys.lsp.toggle_outline, "<cmd>Outline<CR>", { desc = "Toggle Outline" })
 
       require("outline").setup({})
     end,
@@ -39,6 +39,26 @@ return {
     "rachartier/tiny-inline-diagnostic.nvim",
     event = "VeryLazy",
     main = "tiny-inline-diagnostic",
+    keys = {
+      {
+        vim.g.keys.diagnostic.float,
+        function()
+          -- show diagnostics under the cursor
+          vim.diagnostic.open_float()
+        end,
+        mode = "n",
+        desc = "Float Diagnostics",
+      },
+      {
+        vim.g.keys.diagnostic.list,
+        function()
+          -- send diagnostics to the location list
+          vim.diagnostic.setloclist({ open = true })
+        end,
+        mode = "n",
+        desc = "List Diagnostics",
+      },
+    },
     opts = {
       transparent_bg = true,
       transparent_cursorline = true,

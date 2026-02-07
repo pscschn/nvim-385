@@ -1,65 +1,84 @@
-local dap_adapter = "netcoredbg"
-local lsp_server = "roslyn"
-
-local M = { lsp = {}, dap = { bin = nil } }
+local M = {
+  lsp = { name = "roslyn" },
+  dap = { bin = nil, name = "netcoredbg" },
+}
 
 ---@type string dap binary
-M.dap.bin = require("config.settings").dir.mason .. "/netcoredbg/netcoredbg"
+M.dap.bin = vim.g.dirs.mason .. "/netcoredbg/netcoredbg"
 
 M.lsp.install = function()
-  local server = require("mason-registry").get_package(lsp_server)
-
-  if not server:is_installed() then
-    vim.notify("Installing " .. lsp_server)
-    require("mason").setup({
-      registries = {
-        "github:mason-org/mason-registry",
-        "github:Crashdummyy/mason-registry",
-      },
-    })
-    server:install()
-  end
-  return M
+  require("util.mason").safe_install(M.lsp.name)
 end
 
 M.lsp.config = function()
   require("lazy").load({
     plugins = {
       "roslyn.nvim",
-      "nvim-lsp-endhints",
+      --"nvim-lsp-endhints",
+      "explorer.dotnet.nvim",
     },
   })
-
-  return M
 end
 
----@type table
-local dap = M.dap
+M.dap.install = function()
+  require("util.mason").safe_install(M.dap.name)
+end
 
-dap.install = function()
-  local package = require("mason-registry").get_package(dap_adapter)
-  if not package:is_installed() then
-    vim.notify("Installing " .. dap_adapter)
-    package:install()
+--- @param cfg ClangdDapCfg
+M.dap.launch = function(cfg)
+  local cwd = vim.g.dirs.cwd
+  if cfg.bin then
+    return cwd .. "/" .. cfg.bin
   end
 
-  return M
+  return vim.fn.input("Path to dll: ", cwd .. "/bin/Debug/", "file")
 end
 
-dap.config = function()
-  require("dap").adapters[dap_adapter] = {
+--- Dynamically create dap args
+--- @param cfg ClangdDapCfg
+M.dap.args = function(cfg)
+  local args = cfg.args
+  if cfg.makeArgs ~= nil then
+    args = cfg.makeArgs()
+  end
+  return args
+end
+
+M.dap.cfg_or_new = function(cfg)
+  if not cfg then
+    return { args = {}, env = {}, bin = nil }
+  end
+  return cfg
+end
+
+--- @param cfg ClangdDapCfg
+M.dap.config = function(cfg)
+  local dap = require("dap")
+  cfg = M.dap.cfg_or_new(cfg)
+  vim.print(M.dap.bin)
+  dap.adapters[M.dap.name] = {
     type = "executable",
-    command = dap.bin,
+    command = M.dap.bin,
     args = { "--interpreter=vscode" },
   }
-end
 
-dap._config = function()
-  require("lazy").load({
-    plugins = {
-      "nvim-dap-cs",
+  dap.configurations.cs = {
+    {
+      type = "netcoredbg",
+      name = "Launch - netcoredbg",
+      request = "launch",
+      program = function()
+        return M.dap.launch(cfg)
+      end,
+      cwd = "${workspaceFolder}",
+      stopOnEntry = false,
+      args = function()
+        return M.dap.args(cfg)
+      end,
+      runInTerminal = false,
+      env = cfg.env,
     },
-  })
+  }
 end
 
 return M

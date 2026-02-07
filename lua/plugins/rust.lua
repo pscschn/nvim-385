@@ -4,14 +4,14 @@ return {
   lazy = true,
   keys = {},
   config = function(_, _)
-    vim.keymap.set("n", "K", function()
+    vim.keymap.set("n", vim.g.keys.cmp.hover, function()
       vim.cmd.RustLsp({ "hover", "actions" })
     end, { desc = "Hover Action" })
-    vim.keymap.set("n", "<leader>ra", function()
+    vim.keymap.set("n", vim.g.keys.lsp.code_action, function()
       vim.cmd.RustLsp("codeAction")
-    end, { desc = "Code Action" })
+    end, { desc = "Rust Code Action" })
 
-    vim.keymap.set("n", "<leader>re", function()
+    vim.keymap.set("n", vim.g.keys.lsp.expand_error, function()
       vim.cmd.RustLsp({ "explainError", "cycle" })
     end, { desc = "Explain Error" })
 

@@ -1,75 +1,42 @@
-local cmake_server = "cmake-language-server"
-local clangd_server = "clangd"
-local dap_server = "codelldb"
-local cwd = vim.fn.getcwd()
+local M = {
+  lsp = { name = "clangd" },
+  dap = {
+    name = "codelldb",
+    bin = vim.g.dirs.masonbin .. "/codelldb",
+  },
+}
 
-local Cmake = { lsp = {}, dap = {} }
-local Clangd = { lsp = {}, dap = {} }
-local M = { lsp = {}, dap = {}, cmake = Cmake, clangd = Clangd }
-
-Cmake.lsp.install = function()
-  local server = require("mason-registry").get_package(cmake_server)
-
-  if not server:is_installed() then
-    server:install()
-  end
-  return Cmake
+M.lsp.install = function()
+  require("util.mason").safe_install(M.lsp.name)
 end
 
-Cmake.lsp.config = function()
-  local root = require("config.settings").dir.mason .. "/"
-  local bin = root .. cmake_server .. "/venv/bin/" .. cmake_server
-
-  vim.lsp.config("cmake", {
-    cmd = { bin },
-    filetypes = { "cmake" },
-    root_markers = { "CMakePresets.json", "CTestConfig.cmake", "CMakeLists.txt" },
-    single_file_support = true,
-    init_options = {
-      buildDirectory = "build",
-    },
-  })
-  return Cmake
-end
-
-Clangd.lsp.install = function()
-  local server = require("mason-registry").get_package(clangd_server)
-
-  if not server:is_installed() then
-    vim.notify("Installing " .. clangd_server)
-    server:install()
-  end
-end
-
-Clangd.lsp.config = function(args)
+M.lsp.config = function(args)
   vim.lsp.config("clangd", {
     cmd = { "clangd" },
     args = args,
     filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto", "hpp" },
     root_markers = { "*cmake*", "Makefile", "CMakeLists.txt" },
-    capabilities = require("cmp_nvim_lsp").default_capabilities(),
-    settings = {},
+    capabilities = require("blink.cmp").get_lsp_capabilities(vim.lsp.config.capabilities),
+    settings = {
+      clangd = {
+        InlayHints = {
+          Designators = true,
+          Enabled = true,
+          ParameterNames = true,
+          DeducedTypes = true,
+        },
+        fallbackFlags = { "-std=c++20" },
+      },
+    },
   })
 
-  require("lib.lsp").set_keymaps()
-end
+  require("util.keymaps").lsp.attach()
 
-M.lsp.install = function()
-  M.clangd.lsp.install()
-  M.cmake.lsp.install()
-end
-
-M.lsp.config = function()
-  M.clangd.lsp.config()
-  M.cmake.lsp.config()
+  vim.lsp.enable({ "clangd" })
 end
 
 M.dap.install = function()
-  local package = require("mason-registry").get_package(dap_server)
-  if not package:is_installed() then
-    vim.notify("Installing " .. dap_server)
-    package:install()
-  end
+  require("util.mason").safe_install(M.dap.name)
 
   require("lazy").load({
     plugins = {
@@ -85,31 +52,46 @@ end
 ---@field args? [string] launch arguments
 
 --- @param cfg ClangdDapCfg
-M.dap.config = function(cfg)
-  if not cfg then
-    cfg = {}
+M.dap.launch = function(cfg)
+  local cwd = vim.g.dirs.cwd
+  if cfg.bin then
+    return cwd .. "/" .. cfg.bin
   end
 
-  local bin = require("config.settings").dir.masonbin .. "/codelldb"
+  return vim.fn.input("Path to executable: ", cwd .. "/", "file")
+end
+
+--- Dynamically create dap args
+--- @param cfg ClangdDapCfg
+M.dap.args = function(cfg)
+  local args = cfg.args
+  if cfg.makeArgs ~= nil then
+    args = cfg.makeArgs()
+  end
+  return args
+end
+
+M.dap.cfg_or_new = function(cfg)
+  if not cfg then
+    return { args = {}, env = {}, bin = nil, makeArgs = nil }
+  end
+  return cfg
+end
+
+--- @param cfg ClangdDapCfg
+M.dap.config = function(cfg)
   local dap = require("dap")
+  cfg = M.dap.cfg_or_new(cfg)
+
   dap.adapters.codelldb = {
     name = "codelldb server",
     type = "server",
     port = "${port}",
     executable = {
-      command = bin,
+      command = M.dap.bin,
       args = { "--port", "${port}" },
     },
   }
-
-  local args = cfg.args
-  if not cfg.args then
-    args = {}
-  end
-  local env = cfg.env
-  if not cfg.env then
-    args = {}
-  end
 
   dap.configurations.c = {
     {
@@ -117,22 +99,15 @@ M.dap.config = function(cfg)
       type = "codelldb",
       request = "launch",
       program = function()
-        if cfg.bin then
-          return cwd .. "/" .. cfg.bin
-        end
-
-        return vim.fn.input("Path to executable: ", cwd .. "/", "file")
+        return M.dap.launch(cfg)
       end,
       cwd = "${workspaceFolder}",
       stopOnEntry = false,
-      args = function ()
-        if cfg.makeArgs ~= nil then
-          args = cfg.makeArgs(args)
-        end
-        return args
+      args = function()
+        return M.dap.args(cfg)
       end,
       runInTerminal = false,
-      env,
+      env = cfg.env,
     },
   }
 end

@@ -1,38 +1,29 @@
-local settings = require("config.settings")
+local M = {
+  lsp = { name = "typescript-language-server" },
+  dap = { name = "js-debug-adapter" },
+}
 
-local dap_server = "js-debug-adapter"
-local lsp_server = "typescript-language-server"
+M.lsp.root = vim.g.dirs.mason .. "/" .. M.lsp.name .. "/"
 
-local M = { lsp = {}, dap = {} }
+M.dap.bin = vim.g.dirs.mason .. "/js-debug-adapter/js-debug/src/dapDebugServer.js"
 
 M.lsp.install = function()
-  local name = lsp_server
-  local server = require("mason-registry").get_package(name)
-  if not server:is_installed() then
-    vim.notify("Installing" .. name)
-    server:install()
-  end
+  require("util.mason").safe_install(M.lsp.name)
 end
 
 M.lsp.config = function()
-  local name = lsp_server
-  local root = settings.dir.mason .. "/" .. name .. "/"
-
   vim.lsp.config("ts_ls", {
-    cmd = { "npm", "--prefix", root, "exec", name, "--", "--stdio" },
+    cmd = { "npm", "--prefix", M.lsp.root, "exec", M.lsp.name, "--", "--stdio" },
     filetypes = { "typescript", "javascript" },
     root_markers = { "package.json" },
-    capabilities = require("cmp_nvim_lsp").default_capabilities(),
+    capabilities = require("blink.cmp").get_lsp_capabilities(vim.lsp.config.capabilities),
   })
 
-  require("lib.lsp").set_keymaps()
+  require("util.keymaps").lsp.attach()
 end
 
 M.dap.install = function()
-  local package = require("mason-registry").get_package(dap_server)
-  if not package:is_installed() then
-    package:install()
-  end
+  require("util.mason").safe_install(M.dap.name)
 end
 
 ---@class TSDapCfg
@@ -65,8 +56,6 @@ M.dap.config = function(cfg)
     runtimeArgs = cfg.runtimeArgs
   end
 
-  local js_debug_path = require("config.settings").dir.mason .. "/js-debug-adapter"
-
   dap.adapters["pwa-node"] = {
     type = "server",
     host = "::1",
@@ -74,7 +63,7 @@ M.dap.config = function(cfg)
     executable = {
       command = runtimeExecutable,
       args = {
-        js_debug_path .. "/js-debug/src/dapDebugServer.js",
+        M.dap.bin,
         "${port}",
       },
     },

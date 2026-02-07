@@ -40,10 +40,35 @@ return {
     },
   },
   keys = {
-    { "<leader>ff", mode = "n", "<cmd>Telescope find_files<CR>", desc = "Files" },
-    { "<leader>fg", mode = "n", "<cmd>Telescope live_grep<CR>", desc = "Grep" },
-    { "<leader>fb", mode = "n", "<cmd>Telescope buffers<CR>", desc = "Buffers" },
-    { "<leader>fd", mode = "n", "<cmd>Telescope diagnostics<CR>", desc = "Diagnostics" },
-    { "<leader>ft", mode = "n", "<cmd>TodoTelescope<CR>", desc = "To-Do's" },
+    {
+      vim.g.keys.find.files,
+      "<cmd>Telescope find_files<CR>",
+      mode = "n",
+      desc = "Files",
+    },
+    {
+      vim.g.keys.find.grep,
+      "<cmd>Telescope live_grep<CR>",
+      mode = "n",
+      desc = "Grep",
+    },
+    {
+      vim.g.keys.find.buffers,
+      "<cmd>Telescope buffers<CR>",
+      mode = "n",
+      desc = "Buffers",
+    },
+    {
+      vim.g.keys.find.diagnostics,
+      "<cmd>Telescope diagnostics<CR>",
+      mode = "n",
+      desc = "Diagnostics",
+    },
+    {
+      vim.g.keys.find.todo,
+      "<cmd>TodoTelescope<CR>",
+      mode = "n",
+      desc = "To-Do's",
+    },
   },
 }
