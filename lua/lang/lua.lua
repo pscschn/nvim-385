@@ -1,45 +1,43 @@
-local name = "lua-language-server"
-local settings = require("config.settings")
+local M = { lsp = { name = "lua-language-server" } }
 
-local M = { lsp = {} }
+M.lsp.root = vim.g.dirs.mason .. "/" .. M.lsp.name .. "/"
+M.lsp.bin = M.lsp.root .. M.lsp.name
 
 M.lsp.install = function()
-  local server = require("mason-registry").get_package(name)
-
-  if not server:is_installed() then
-    vim.notify("Installing" .. name)
-    server:install()
-  end
+  require("util.mason").safe_install(M.lsp.name)
 end
 
 M.lsp.config = function()
-  local root = settings.dir.mason .. "/" .. name .. "/"
+  local settings = {
+    Lua = {
+      runtime = {
+        version = "LuaJIT",
+      },
+      diagnostics = {
+        globals = { "vim" },
+      },
+      workspace = {
+        library = vim.api.nvim_get_runtime_file("", true),
+        checkThirdParty = false,
+      },
+      telemetry = {
+        enable = false,
+      },
+      hint = { enable = true },
+    },
+  }
 
   vim.lsp.config("lua_ls", {
-    cmd = { root .. name },
+    cmd = { M.lsp.bin },
     filetypes = { "lua" },
     root_markers = { ".git", "*.rockspec", "init.lua" },
-    capabilities = require("cmp_nvim_lsp").default_capabilities(),
-    settings = {
-      Lua = {
-        runtime = {
-          version = "LuaJIT",
-        },
-        diagnostics = {
-          globals = { "vim" },
-        },
-        workspace = {
-          library = vim.api.nvim_get_runtime_file("", true),
-          checkThirdParty = false,
-        },
-        telemetry = {
-          enable = false,
-        },
-      },
-    },
+    capabilities = require("blink.cmp").get_lsp_capabilities(vim.lsp.config.capabilities),
+    settings = settings,
   })
 
-  require("lib.lsp").set_keymaps()
+  require("util.keymaps").lsp.attach()
+
+  vim.lsp.enable({ "lua_ls" })
 end
 
 return M

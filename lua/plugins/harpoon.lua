@@ -8,41 +8,41 @@ return {
   },
   keys = {
     {
-      "<leader>ml",
-      mode = "n",
+      vim.g.keys.marks.list,
       nil,
+      mode = "n",
       desc = "List marks",
     },
     {
-      "<leader>ma",
-      mode = "n",
+      vim.g.keys.marks.add,
       function()
         require("harpoon"):list():add()
       end,
+      mode = "n",
       desc = "Add",
     },
     {
-      "<leader>mc",
-      mode = "n",
+      vim.g.keys.marks.clear,
       function()
         require("harpoon"):list():clear()
       end,
+      mode = "n",
       desc = "Clear all",
     },
     {
-      "<C-f>",
-      mode = "n",
+      vim.g.keys.marks.next,
       function()
         require("harpoon"):list():next()
       end,
+      mode = "n",
       desc = "Next marked file",
     },
     {
-      "<C-g>",
-      mode = "n",
+      vim.g.keys.marks.prev,
       function()
         require("harpoon"):list():prev()
       end,
+      mode = "n",
       desc = "Prev marked file",
     },
   },
@@ -50,6 +50,7 @@ return {
     local harpoon = require("harpoon")
     local conf = require("telescope.config").values
     local pickers = require("telescope.pickers")
+
     local new_finder = function(harpoon_files)
       return require("telescope.finders").new_table({
         results = harpoon_files.items,
@@ -90,7 +91,7 @@ return {
       picker:find()
     end
 
-    vim.keymap.set("n", "<leader>ml", function()
+    vim.keymap.set("n", vim.g.keys.marks.list, function()
       toggle_telescope(harpoon:list())
     end)
   end,

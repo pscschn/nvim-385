@@ -22,11 +22,11 @@ return {
       local wk = require("which-key")
 
       wk.add({
-        { "<leader>f", group = "Fuzzy Finder" },
-        { "<leader>l", group = "Lang" },
-        { "<leader>d", group = "Debug" },
-        { "<leader>m", group = "Marked Files" },
-        { "<leader>?", group = "Buffer Keymaps" },
+        { vim.g.keys.groups.fuzzy, group = "Fuzzy Finder" },
+        { vim.g.keys.groups.lang, group = "Lang" },
+        { vim.g.keys.groups.debug, group = "Diagnostic" },
+        { vim.g.keys.groups.marks, group = "Marked Files" },
+        { vim.g.keys.groups.help, group = "Buffer Keymaps" },
       })
     end,
   },

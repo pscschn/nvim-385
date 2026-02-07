@@ -2,18 +2,21 @@ return {
   "nvim-pack/nvim-spectre",
   keys = {
     {
-      "<leader>fr",
+      vim.g.keys.find.replace,
       mode = "n",
-      '<cmd>lua require("spectre").toggle()<CR>',
+      function()
+        require("spectre").toggle()
+      end,
       desc = "Toggle spectre",
     },
     {
 
-      "<leader>fs",
+      vim.g.keys.find.open_replace,
       mode = "n",
-      '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>',
+      function()
+        require("spectre").open_file_search({ select_word = true })
+      end,
       desc = "Search on current buffer",
     },
   },
-  setup = function() end,
 }

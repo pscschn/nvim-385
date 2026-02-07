@@ -1,54 +1,48 @@
-local settings = require("config.settings")
-local lsp_server = "vue-language-server"
+local M = { lsp = { name = "vue-language-server" } }
 
-local M = { lsp = {} }
+M.lsp.root = vim.g.dirs.mason .. "/" .. M.lsp.name .. "/"
 
 M.lsp.install = function()
-  local server = require("mason-registry").get_package(lsp_server)
-  if not server:is_installed() then
-    vim.notify("Installing" .. lsp_server)
-    server:install()
-  end
+  require("util.mason").safe_install(M.lsp.name)
 end
 
 M.lsp.config = function()
-  local root = settings.dir.mason .. "/" .. lsp_server .. "/"
-
+  local settings = {
+    typescript = {
+      inlayHints = {
+        enumMemberValues = {
+          enabled = true,
+        },
+        functionLikeReturnTypes = {
+          enabled = true,
+        },
+        propertyDeclarationTypes = {
+          enabled = true,
+        },
+        parameterTypes = {
+          enabled = true,
+          suppressWhenArgumentMatchesName = true,
+        },
+        variableTypes = {
+          enabled = true,
+        },
+      },
+    },
+  }
   vim.lsp.config("volar", {
-    cmd = { "npm", "--prefix", root, "exec", lsp_server, "--", "--stdio" },
+    cmd = { "npm", "--prefix", M.lsp.root, "exec", M.lsp.lsp_server, "--", "--stdio" },
     filetypes = { "vue", "javascript", "typescript", "typescriptreact" },
     root_markers = { "package.json", "vite.config.js" },
-    capabilities = require("cmp_nvim_lsp").default_capabilities(),
+    capabilities = require("blink.cmp").get_lsp_capabilities(vim.lsp.config.capabilities),
     init_options = {
       vue = {
         hybridMode = false,
       },
     },
-    settings = {
-      typescript = {
-        inlayHints = {
-          enumMemberValues = {
-            enabled = true,
-          },
-          functionLikeReturnTypes = {
-            enabled = true,
-          },
-          propertyDeclarationTypes = {
-            enabled = true,
-          },
-          parameterTypes = {
-            enabled = true,
-            suppressWhenArgumentMatchesName = true,
-          },
-          variableTypes = {
-            enabled = true,
-          },
-        },
-      },
-    },
+    settings = settings,
   })
 
-  require("lib.lsp").set_keymaps()
+  require("util.keymaps").lsp.attach()
 end
 
 return M

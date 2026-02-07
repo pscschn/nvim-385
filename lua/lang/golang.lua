@@ -1,47 +1,42 @@
-local settings = require("config.settings")
+local M = {
+  lsp = { name = "gopls" },
+  dap = { name = "delve", bin = nil },
+}
 
-local lsp_server = "gopls"
-local dap_server = "delve"
-
-local M = { lsp = {}, dap = { bin = nil } }
-
+M.lsp.bin = vim.g.dirs.mason .. "/" .. M.lsp.name .. "/" .. M.lsp.name
 --- @type string dap binary
-M.dap.bin = settings.dir.mason .. "/" .. dap_server .. "/dlv"
+M.dap.bin = vim.g.dirs.mason .. "/" .. M.dap.name .. "/dlv"
 
 M.lsp.install = function()
-  local package = require("mason-registry").get_package(lsp_server)
-  if not package:is_installed() then
-    vim.notify("Installing" .. lsp_server)
-    package:install()
-  end
+  require("util.mason").safe_install(M.lsp.name)
 end
 
 M.lsp.config = function()
   local config = vim.lsp.config
-
-  local lsp_bin = settings.dir.mason .. "/" .. lsp_server .. "/" .. lsp_server
-  config.gopls.setup({
-    cmd = { lsp_bin },
-    filetypes = { "go" },
-    root_markers = { "go.mod" },
-    capabilities = require("cmp_nvim_lsp").default_capabilities(),
-    settings = {
-      gopls = {
-        analyses = {
-          unusedparams = true,
-        },
-        staticcheck = true,
-        hints = {
-          rangeVariableTypes = true,
-          parameterNames = true,
-          constantValues = true,
-          assignVariableTypes = true,
-          compositeLiteralFields = true,
-          compositeLiteralTypes = true,
-          functionTypeParameters = true,
-        },
+  local settings = {
+    gopls = {
+      analyses = {
+        unusedparams = true,
+      },
+      staticcheck = true,
+      hints = {
+        rangeVariableTypes = true,
+        parameterNames = true,
+        constantValues = true,
+        assignVariableTypes = true,
+        compositeLiteralFields = true,
+        compositeLiteralTypes = true,
+        functionTypeParameters = true,
       },
     },
+  }
+
+  config.gopls.setup({
+    cmd = { M.lsp.bin },
+    filetypes = { "go" },
+    root_markers = { "go.mod" },
+    capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities),
+    settings = settings,
     on_attach = function(_, _)
       require("lazy").load({
         plugins = {
@@ -52,15 +47,11 @@ M.lsp.config = function()
     end,
   })
 
-  require("lib.lsp").set_keymaps()
+  require("util.keymaps").lsp.attach()
 end
 
 M.dap.install = function()
-  local package = require("mason-registry").get_package(dap_server)
-  if not package:is_installed() then
-    vim.notify("Installing" .. dap_server)
-    package:install()
-  end
+  require("util.mason").safe_install(M.dap.name)
 end
 
 M.dap.config = function()

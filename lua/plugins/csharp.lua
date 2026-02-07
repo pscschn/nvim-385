@@ -1,7 +1,3 @@
-local get_netcoredbg_path = function()
-  return require("lang.csharp").dap.bin
-end
-
 return {
   {
     "seblyng/roslyn.nvim",
@@ -12,28 +8,66 @@ return {
       "nvim-treesitter/nvim-treesitter",
     },
     main = "roslyn",
-    --ft = "cs",
+    opts = {
+      settings = {
+        ["csharp|inlay_hints"] = {
+          csharp_enable_inlay_hints_for_implicit_object_creation = true,
+          csharp_enable_inlay_hints_for_implicit_variable_types = true,
+          dotnet_enable_inlay_hints_for_parameters = true,
+          dotnet_enable_inlay_hints_for_other_parameters = true,
+          dotnet_enable_inlay_hints_for_object_creation_parameters = true,
+          dotnet_enable_inlay_hints_for_literal_parameters = true,
+          dotnet_enable_inlay_hints_for_indexer_parameters = true,
+          csharp_enable_inlay_hints_for_types = true,
+          csharp_enable_inlay_hints_for_lambda_parameter_types = true,
+        },
+        ["csharp|code_lens"] = {
+          dotnet_enable_references_code_lens = true,
+          dotnet_enable_tests_code_lens = true,
+        },
+      },
+    },
     config = function(_, opts)
-      require("nvim-treesitter.configs").setup({
-        ensure_installed = { "c_sharp" },
-        sync_install = true,
-        auto_install = true,
-      })
-      require("roslyn").setup(opts)
+      require("util.treesitter").install({ "c_sharp" })
+
+      vim.lsp.config("roslyn", opts)
+
       require("neotest").setup({
         adapters = {
           require("neotest-vstest")({
-            -- table is passed directly to DAP when debugging tests.
+            sdk_path = vim.g.plugins.dotnet.sdk_path,
             dap_settings = {
-              adapter = get_netcoredbg_path(),
+              adapter = require("lang.csharp").dap.name,
             },
-            dotnet_additional_args = {
-              "-c Debug",
+            build_opts = {
+              additional_args = {
+                --"-c Debug"
+              },
             },
           }),
         },
       })
-      require("lib.lsp").set_keymaps()
+
+      require("util.keymaps").lsp.attach()
     end,
+  },
+  {
+    "xentropic-dev/explorer.dotnet.nvim",
+    lazy = true,
+    enabled = function()
+      return vim.g.plugins.dotnet.explorer
+    end,
+    opts = {
+      renderer = {
+        width = 30,
+        side = "left",
+      },
+    },
+    config = function(_, opts)
+      require("dotnet_explorer").setup(opts)
+    end,
+    keys = {
+      { vim.g.keys.lsp.toggle_explorer, "<cmd>ToggleSolutionExplorer<cr>", desc = "Toggle Solution Explorer" },
+    },
   },
 }
