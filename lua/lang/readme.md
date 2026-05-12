@@ -28,7 +28,7 @@ M.config = function ()
 end
 
 return M
-}
+
 ```
 
 ## Lua_ls Example
@@ -94,8 +94,25 @@ The project settings below use `mason` to install `ansible-language-server` whic
 return {
   config = function()
     local ansible = require("lang.ansible")
-    ansible.install()
-    ansible.config()
+    ansible.lsp.install()
+    ansible.lsp.config()
+  end
+}
+```
+
+## Typescript Example
+
+```lua
+-- settings.lua
+
+return {
+  config = function()
+		local ts = require("lang.ts")
+		ts.lsp.install(cfg)
+		ts.lsp.config(cfg)
+
+		ts.dap.install()
+		ts.dap.config()
   end
 }
 ```
