@@ -20,6 +20,7 @@ vim.lsp.inlay_hint.enable()
 vim.api.nvim_set_keymap("", "<Space>", "<Nop>", {})
 --vim.o.winbar = " "
 local data = vim.fn.stdpath("data")
+local home = vim.fs.normalize("~")
 vim.g.dirs = {
   cwd = vim.fn.getcwd(),
   data = data,
@@ -28,8 +29,12 @@ vim.g.dirs = {
   lsp = data .. "/lsp",
   mason = data .. "/mason/packages",
   masonbin = data .. "/mason/bin",
-  lazy = vim.fn.stdpath("data") .. "/lazy/lazy.nvim",
+  lazy = data .. "/lazy/lazy.nvim",
   project_settings = "./.nvim/settings.lua",
+  home = home,
+  bun = {
+    global_modules = home .. "/.bun/install/global/node_modules"
+  },
 }
 
 vim.g.signs = {
@@ -91,6 +96,7 @@ vim.g.keys = {
   },
   tests = {
     toggle_ui = "<leader>tt",
+    run_at_cursor = "<leader>tc",
   },
   find = {
     replace = "<leader>fr",
