@@ -33,7 +33,7 @@ vim.g.dirs = {
   project_settings = "./.nvim/settings.lua",
   home = home,
   bun = {
-    global_modules = home .. "/.bun/install/global/node_modules"
+    global_modules = home .. "/.bun/install/global/node_modules",
   },
 }
 
