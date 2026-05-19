@@ -5,8 +5,15 @@ return {
     opts = {
       themes = {
         { name = "Oldworld", colorscheme = "oldworld" },
+        { name = "One Dark", colorscheme = "onedark" },
       },
       livePreview = true,
+    },
+  },
+  {
+    "navarasu/onedark.nvim",
+    opts = {
+      style = "warmer",
     },
   },
   {

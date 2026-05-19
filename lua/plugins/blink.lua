@@ -1,17 +1,48 @@
+local _config = function(_, opts)
+  local blink = require("blink.cmp")
+  local toggled = false
+  vim.keymap.set("n", vim.g.keys.cmp.signature, function()
+    if toggled then
+      --blink.hide_documentation()
+      blink.hide_signature()
+      toggled = false
+    else
+      --blink.show_documentation()
+      blink.show_signature()
+      toggled = true
+    end
+  end)
+  blink.setup(opts)
+end
 return {
   "saghen/blink.cmp",
-  dependencies = { "saghen/blink.lib" },
-  build = function()
-    require("blink.cmp").build():wait(60000)
-  end,
+  version = "1.*",
+  --dependencies = { "saghen/blink.lib" },
+  --build = function()
+  --require("blink.cmp").build():wait(60000)
+  --end,
   opts = {
-    signature = { enabled = true },
     keymap = {
       [vim.g.keys.cmp.select_prev] = { "select_prev" },
       [vim.g.keys.cmp.select_next] = { "select_next" },
       [vim.g.keys.cmp.scroll_up] = { "scroll_documentation_up" },
       [vim.g.keys.cmp.scroll_down] = { "scroll_documentation_down" },
       [vim.g.keys.cmp.accept] = { "accept", "fallback" },
+
+      [vim.g.keys.cmp.signature] = {
+        modes = { "n" },
+        "show_signature",
+        "show_documentation",
+        "hide_signature",
+        "hide_documentation",
+        "fallback",
+      },
+
+      [vim.g.keys.cmp.signature] = {
+        modes = { "i" },
+        "fallback",
+      },
+
       [vim.g.keys.cmp.tab] = {
         function(cmp)
           if cmp.snippet_active() then
@@ -63,21 +94,4 @@ return {
     },
   },
   opts_extend = { "sources.default" },
-  config = function(_, opts)
-    local blink = require("blink.cmp")
-    local toggled = false
-    vim.keymap.set("n", vim.g.keys.cmp.signature, function()
-      if toggled then
-        --blink.hide_documentation()
-        blink.hide_signature()
-        toggled = false
-      else
-        --blink.show_documentation()
-        blink.show_signature()
-        toggled = true
-      end
-    end)
-
-    blink.setup(opts)
-  end,
 }
