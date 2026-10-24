@@ -39,7 +39,7 @@ M.lsp.install = function() --cfg)
   --return lsp_bun_install()
   --end
 
-  require("util.mason").safe_install(M.lsp.name)
+  require("util.plugin").mason.safe_install(M.lsp.name)
 end
 
 -- --- @param cfg TsLspCfg
@@ -61,13 +61,13 @@ M.lsp.config = function() --cfg)
     root_markers = { "package.json" },
     capabilities = require("blink.cmp").get_lsp_capabilities(vim.lsp.config.capabilities),
   })
-  require("util.keymaps").lsp.attach()
+  require("config.lsp").attach()
 
   vim.lsp.enable({ "ts_ls" })
 end
 
 M.dap.install = function()
-  require("util.mason").safe_install(M.dap.name)
+  require("util.plugin").mason.safe_install(M.dap.name)
 end
 
 M.dap.configurations = {}
@@ -189,6 +189,14 @@ M.dap.config = function(cfg)
   vim.keymap.set("n", vim.g.keys.tests.run_at_cursor, function()
     require("dap").run(M.dap.configurations.at_cursor.obj)
   end, { desc = "Debug jest test at cursor" })
+end
+
+M.enable = function()
+  M.lsp.install()
+  M.lsp.config()
+
+  M.dap.install()
+  M.dap.config()
 end
 
 return M

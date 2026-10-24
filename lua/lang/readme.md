@@ -25,6 +25,14 @@ M.config = function ()
       return { require("util.lsp").functions.at_cursor() }
     end,
   })
+
+  -- disables continuing a comment when adding a new line
+  vim.api.nvim_create_autocmd("BufEnter", {
+    pattern = { "*.c", "*.cpp", "*.h", "*.hpp" },
+    callback = function()
+      vim.opt_local.formatoptions:remove({ "c", "r", "o" })
+    end,
+  })
 end
 
 return M

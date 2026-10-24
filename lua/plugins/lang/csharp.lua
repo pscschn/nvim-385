@@ -28,7 +28,7 @@ return {
       },
     },
     config = function(_, opts)
-      require("util.treesitter").install({ "c_sharp" })
+      require("util.plugin").treesitter.install.install({ "c_sharp" })
 
       vim.lsp.config("roslyn", opts)
 
@@ -40,15 +40,13 @@ return {
               adapter = require("lang.csharp").dap.name,
             },
             build_opts = {
-              additional_args = {
-                --"-c Debug"
-              },
+              additional_args = vim.g.plugins.dotnet.additional_args(),
             },
           }),
         },
       })
 
-      require("util.keymaps").lsp.attach()
+      require("config.lsp").attach()
     end,
   },
   {

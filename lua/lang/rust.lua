@@ -8,20 +8,18 @@ M.lsp.bin = M.lsp.root .. "codelldb"
 M.lsp.liblldb = M.lsp.root .. "extension/lib/liblldb.so"
 
 M.lsp.install = function()
-  require("util.mason").safe_install(M.lsp.name)
+  require("util.plugin").mason.safe_install(M.lsp.name)
 end
 
 M.lsp.config = function()
-  require("util.keymaps").lsp.attach()
-  require("lazy").load({
-    plugins = {
-      "rustaceanvim",
-    },
+  require("config.lsp").attach()
+  require("util.plugin").manager.load_plugin({
+    "rustaceanvim",
   })
 end
 
 M.dap.install = function()
-  require("util.mason").safe_install(M.dap.name)
+  require("util.plugin").mason.safe_install(M.dap.name)
 end
 
 M.dap.config = function()
@@ -33,6 +31,14 @@ M.dap.config = function()
       },
     }
   end
+end
+
+M.enable = function()
+  M.lsp.install()
+  M.lsp.config()
+
+  M.dap.install()
+  M.dap.config()
 end
 
 return M

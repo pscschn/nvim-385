@@ -4,9 +4,9 @@
 ---
 --- @class Keymaps
 --- @field lsp LspKeymaps
-local M = { lsp = {} }
+local M = { on_attach = nil }
 
-M.lsp.on_attach = {
+M.on_attach = {
   {
     lhs = vim.g.keys.lsp.find_refs,
     rhs = require("telescope.builtin").lsp_references,
@@ -41,8 +41,8 @@ M.lsp.on_attach = {
   },
 }
 
-M.lsp.attach = function()
-  local keys = M.lsp.on_attach
+M.attach = function()
+  local keys = M.on_attach
   for _, mapping in ipairs(keys) do
     local opts = mapping.opts
 

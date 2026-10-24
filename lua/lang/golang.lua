@@ -8,7 +8,7 @@ M.lsp.bin = vim.g.dirs.mason .. "/" .. M.lsp.name .. "/" .. M.lsp.name
 M.dap.bin = vim.g.dirs.mason .. "/" .. M.dap.name .. "/dlv"
 
 M.lsp.install = function()
-  require("util.mason").safe_install(M.lsp.name)
+  require("util.plugin").mason.safe_install(M.lsp.name)
 end
 
 M.lsp.config = function()
@@ -38,29 +38,33 @@ M.lsp.config = function()
     capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities),
     settings = settings,
     on_attach = function(_, _)
-      require("lazy").load({
-        plugins = {
-          "neotest-golang",
-          "nvim-lsp-endhints",
-        },
+      require("util.plugin").manager.load_plugin({
+        "neotest-golang",
+        "nvim-lsp-endhints",
       })
     end,
   })
 
-  require("util.keymaps").lsp.attach()
+  require("config.lsp").attach()
 end
 
 M.dap.install = function()
-  require("util.mason").safe_install(M.dap.name)
+  require("util.plugin").mason.safe_install(M.dap.name)
 end
 
 M.dap.config = function()
-  require("lazy").load({
-    plugins = {
-      "nvim-dap-go",
-      "nvim-dap-virtual-text",
-    },
+  require("util.plugin").manager.load_plugin({
+    "nvim-dap-go",
+    "nvim-dap-virtual-text",
   })
+end
+
+M.enable = function()
+  M.lsp.install()
+  M.lsp.config()
+
+  M.dap.install()
+  M.dap.config()
 end
 
 return M

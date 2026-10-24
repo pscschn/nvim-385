@@ -38,21 +38,8 @@ local parse_data = function(data)
   return out
 end
 
----Reads a dotenv file to a lua table
----@param path string Path to a dotenv file
----@return table|nil table  Deserialized dotenv content
 M.read_file = function(path)
-  if path == nil then
-    return nil
-  end
-  local file = io.open(path, "r")
-  if file == nil then
-    return nil
-  end
-
-  io.input(file)
-  local data = io.read("*a")
-  io.close(file)
+  local data = require("util.fs").read_file(path)
   return parse_data(data)
 end
 

@@ -1,5 +1,5 @@
 FROM docker.io/debian:stable-slim
-ARG VERSION=0.11.4
+ARG VERSION=0.12.6
 
 RUN apt-get update && \
   apt-get -y install curl git

@@ -5,7 +5,7 @@ local M = {
 M.lsp.bin = vim.g.dirs.mason .. "/" .. M.lsp.name .. "/venv/bin/" .. M.lsp.name
 
 M.lsp.install = function()
-  require("util.mason").safe_install(M.lsp.name)
+  require("util.plugin").mason.safe_install(M.lsp.name)
 end
 
 M.lsp.config = function()
@@ -20,6 +20,11 @@ M.lsp.config = function()
   })
 
   vim.lsp.enable({ "cmake" })
+end
+
+M.enable = function()
+  M.lsp.install()
+  M.lsp.config()
 end
 
 return M

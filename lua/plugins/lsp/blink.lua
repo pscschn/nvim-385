@@ -1,28 +1,11 @@
-local _config = function(_, opts)
-  local blink = require("blink.cmp")
-  local toggled = false
-  vim.keymap.set("n", vim.g.keys.cmp.signature, function()
-    if toggled then
-      --blink.hide_documentation()
-      blink.hide_signature()
-      toggled = false
-    else
-      --blink.show_documentation()
-      blink.show_signature()
-      toggled = true
-    end
-  end)
-  blink.setup(opts)
-end
 return {
   "saghen/blink.cmp",
   version = "1.*",
-  --dependencies = { "saghen/blink.lib" },
-  --build = function()
-  --require("blink.cmp").build():wait(60000)
-  --end,
+  --lazy = true,
+  event = "BufReadPost",
   opts = {
     keymap = {
+      [vim.g.keys.cmp.show_menu] = { "show", "fallback" },
       [vim.g.keys.cmp.select_prev] = { "select_prev" },
       [vim.g.keys.cmp.select_next] = { "select_next" },
       [vim.g.keys.cmp.scroll_up] = { "scroll_documentation_up" },
@@ -59,10 +42,17 @@ return {
       nerd_font_variant = "mono",
     },
     completion = {
-      documentation = { auto_show = false },
-      ghost_text = {
-        enabled = true,
+      trigger = {
+        show_on_keyword = false,
+        show_on_trigger_character = false,
       },
+
+      documentation = { auto_show = false },
+
+      ghost_text = {
+        enabled = false,
+      },
+
       menu = {
         draw = {
           components = {
@@ -94,4 +84,11 @@ return {
     },
   },
   opts_extend = { "sources.default" },
+  config = function(_, opts)
+    require("blink.cmp").setup(opts)
+    local projects = require("util.projects")
+    if projects.loaded then
+      projects.loaded.config()
+    end
+  end,
 }

@@ -1,5 +1,7 @@
 ---@class ProjectSettingsModule
 ---@field load fun(): ProjectSettings
+---@field init fun()            -- Called early to set up globals, options, or state
+---@field config fun()          -- Called after init to apply configuration
 ---@field normalize fun(module:ProjectSettings): ProjectSettings
 --- Project settings loader.
 ---
@@ -12,7 +14,8 @@
 
 --- @class ProjectModule
 --- @field settings ProjectSettingsModule|{}
-local M = { settings = {} }
+--- @field loaded ProjectSettings|nil
+local M = { settings = {}, loaded = nil }
 
 ---@class ProjectSettings
 ---@field init fun()            -- Called early to set up globals, options, or state
@@ -56,11 +59,9 @@ M.settings.load = function()
   local config_path = vim.g.dirs.project_settings
 
   -- Check file exists
-  local file = io.open(config_path, "r")
-  if not file then
+  if not require("util.fs").file_exists(config_path) then
     return DefaultSettings
   end
-  file:close()
 
   -- Load the file as a Lua chunk
   local chunk, err = loadfile(config_path)
@@ -81,7 +82,9 @@ M.settings.load = function()
     return DefaultSettings
   end
 
-  return M.settings.normalize(module)
+  local result = M.settings.normalize(module)
+  M.loaded = result
+  return result
 end
 
 return M

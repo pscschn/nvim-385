@@ -7,21 +7,19 @@ local M = {
 M.dap.bin = vim.g.dirs.mason .. "/netcoredbg/netcoredbg"
 
 M.lsp.install = function()
-  require("util.mason").safe_install(M.lsp.name)
+  require("util.plugin").mason.safe_install(M.lsp.name)
 end
 
 M.lsp.config = function()
-  require("lazy").load({
-    plugins = {
-      "roslyn.nvim",
-      --"nvim-lsp-endhints",
-      "explorer.dotnet.nvim",
-    },
+  require("util.plugin").manager.load_plugin({
+    "roslyn.nvim",
+    --"nvim-lsp-endhints",
+    "explorer.dotnet.nvim",
   })
 end
 
 M.dap.install = function()
-  require("util.mason").safe_install(M.dap.name)
+  require("util.plugin").mason.safe_install(M.dap.name)
 end
 
 --- @param cfg ClangdDapCfg
@@ -79,6 +77,14 @@ M.dap.config = function(cfg)
       env = cfg.env,
     },
   }
+end
+
+M.enable = function()
+  M.lsp.install()
+  M.lsp.config()
+
+  M.dap.install()
+  M.dap.config()
 end
 
 return M

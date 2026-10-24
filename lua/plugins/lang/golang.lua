@@ -10,7 +10,7 @@ return {
     },
     config = function()
       local neotest_golang_opts = {}
-      require("util.treesitter").install({ "go" })
+      require("util.plugin").treesitter.install.install({ "go" })
       require("neotest").setup({
         adapters = {
           require("neotest-golang")(neotest_golang_opts),

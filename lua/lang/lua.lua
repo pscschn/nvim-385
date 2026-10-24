@@ -1,10 +1,15 @@
-local M = { lsp = { name = "lua-language-server" } }
+local M = { lsp = { name = "lua-language-server" }, enable = nil }
 
 M.lsp.root = vim.g.dirs.mason .. "/" .. M.lsp.name .. "/"
 M.lsp.bin = M.lsp.root .. M.lsp.name
 
+M.enable = function()
+  M.lsp.install()
+  M.lsp.config()
+end
+
 M.lsp.install = function()
-  require("util.mason").safe_install(M.lsp.name)
+  require("util.plugin").mason.safe_install(M.lsp.name)
 end
 
 M.lsp.config = function()
@@ -35,7 +40,7 @@ M.lsp.config = function()
     settings = settings,
   })
 
-  require("util.keymaps").lsp.attach()
+  require("config.lsp").attach()
 
   vim.lsp.enable({ "lua_ls" })
 end

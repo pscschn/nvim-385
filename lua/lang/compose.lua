@@ -5,7 +5,7 @@ local M = {
 M.lsp.root = vim.g.dirs.mason .. "/" .. M.lsp.name .. "/"
 
 M.lsp.install = function()
-  require("util.mason").safe_install(M.lsp.name)
+  require("util.plugin").mason.safe_install(M.lsp.name)
 end
 
 M.lsp.config = function()
@@ -18,6 +18,11 @@ M.lsp.config = function()
   })
 
   vim.lsp.enable({ "docker_compose_language_service" })
+end
+
+M.enable = function()
+  M.lsp.install()
+  M.lsp.config()
 end
 
 return M

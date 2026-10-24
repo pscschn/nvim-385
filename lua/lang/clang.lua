@@ -1,19 +1,6 @@
 local M = {
-  lsp = { name = "clangd" },
-  dap = {
-    name = "codelldb",
-    bin = vim.g.dirs.masonbin .. "/codelldb",
-  },
-}
-
-M.lsp.install = function()
-  require("util.mason").safe_install(M.lsp.name)
-end
-
-M.lsp.config = function(args)
-  vim.lsp.config("clangd", {
-    cmd = { "clangd" },
-    args = args,
+  lsp = {
+    name = "clangd",
     filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto", "hpp" },
     root_markers = { "*cmake*", "Makefile", "CMakeLists.txt" },
     capabilities = require("blink.cmp").get_lsp_capabilities(vim.lsp.config.capabilities),
@@ -28,20 +15,38 @@ M.lsp.config = function(args)
         fallbackFlags = { "-std=c++20" },
       },
     },
+  },
+  dap = {
+    name = "codelldb",
+    bin = vim.g.dirs.masonbin .. "/codelldb",
+  },
+}
+
+M.lsp.install = function()
+  require("util.plugin").mason.safe_install(M.lsp.name)
+end
+
+M.lsp.config = function(args)
+  local cmd = vim.list_extend({ "clangd" }, args)
+
+  vim.lsp.config("clangd", {
+    cmd = cmd,
+    filetypes = M.lsp.filetypes,
+    root_markers = M.lsp.root_markers,
+    capabilities = require("blink.cmp").get_lsp_capabilities(vim.lsp.config.capabilities),
+    settings = M.lsp.settings,
   })
 
-  require("util.keymaps").lsp.attach()
+  require("config.lsp").attach()
 
   vim.lsp.enable({ "clangd" })
 end
 
 M.dap.install = function()
-  require("util.mason").safe_install(M.dap.name)
+  require("util.plugin").mason.safe_install(M.dap.name)
 
-  require("lazy").load({
-    plugins = {
-      "nvim-dap-virtual-text",
-    },
+  require("util.plugin").manager.load_plugin({
+    "nvim-dap-virtual-text",
   })
 end
 
@@ -93,8 +98,8 @@ M.dap.config = function(cfg)
     },
   }
 
-  dap.configurations.c = {
-    {
+  local function makeConfig()
+    return {
       name = "Launch C executable",
       type = "codelldb",
       request = "launch",
@@ -108,8 +113,19 @@ M.dap.config = function(cfg)
       end,
       runInTerminal = false,
       env = cfg.env,
-    },
-  }
+    }
+  end
+
+  dap.configurations.cpp = { makeConfig() }
+  dap.configurations.c = { makeConfig() }
+end
+
+M.enable = function()
+  M.lsp.install()
+  M.lsp.config()
+
+  M.dap.install()
+  M.dap.config()
 end
 
 return M
