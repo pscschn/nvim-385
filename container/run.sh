@@ -5,7 +5,7 @@
 set -ex
 
 podman build \
-  -f https://raw.githubusercontent.com/pscschn/nvim-385/refs/heads/master/container/Dockerfile \
+  -f https://raw.githubusercontent.com/pscschn/nvim-385/refs/heads/main/container/Dockerfile \
   -t nvim-385 . && \
 podman run \
   --replace -it \

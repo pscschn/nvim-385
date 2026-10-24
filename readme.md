@@ -7,7 +7,7 @@ My personal nvim config - lightweight setup + per project customization options.
 [container/run.sh](./container/run.sh) runs a podman container with this config.
 
 ```shell
-bash <(curl -s https://raw.githubusercontent.com/pscschn/nvim-385/refs/heads/master/container/run.sh)
+bash <(curl -s https://raw.githubusercontent.com/pscschn/nvim-385/refs/heads/main/container/run.sh)
 ```
 
 ### Customizations & Project Settings
